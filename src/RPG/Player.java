@@ -48,7 +48,7 @@ public final class Player {
     
     //Increment the player's movement count
     public void updateMoveCount() {
-        this.moveCount ++;
+        this.moveCount++;
     }
     
     //Get the number of monsters the player has fought
@@ -95,9 +95,8 @@ public final class Player {
         //If the player already has the item, increment the number of those items they have
         if (this.items.contains(item)) {
             for (Item i : this.items) {
-                if (i.equals(item)) {
+                if (i.equals(item))
                     i.numHeld++;
-                }
             }
         } else
             this.items.add(item);
@@ -121,7 +120,7 @@ public final class Player {
         if (this.items.isEmpty()) {
             System.out.println("You don't have any items!");
             return null;
-        }
+        }   
         
         Scanner scan = new Scanner(System.in);
         int selection, count;
