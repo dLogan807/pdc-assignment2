@@ -4,9 +4,11 @@
     <open-files xmlns="http://www.netbeans.org/ns/projectui-open-files/2">
         <group>
             <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/DBManager.java</file>
+            <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/DBSavesTable.java</file>
             <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/DBTable.java</file>
             <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/Menu.java</file>
-            <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/Player.java</file>
+            <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/DBScoresTable.java</file>
+            <file>file:/C:/Users/darkl/OneDrive/Desktop/University/Year%202/Semester%202/Program%20Design%20and%20Construction/Assignments/pdc-assignment2/src/RPG/Monster.java</file>
         </group>
     </open-files>
 </project-private>
