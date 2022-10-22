@@ -39,9 +39,9 @@ public class ItemTile extends Tile {
         
         //Equal chance of getting any type of item
         if (randItem == 0)
-            item = new HealingPotion();
+            item = ItemFactory.getItem("healing potion");
         else
-            item = new DamagePotion();
+            item = ItemFactory.getItem("damage potion");
                     
         return item;
     }

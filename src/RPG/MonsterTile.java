@@ -23,13 +23,13 @@ public class MonsterTile extends Tile {
         
         switch(monsterSelect) {
             case 1:
-                monster = new Slime();
+                monster = MonsterFactory.getMonster("bat");
                 break;
             case 2:
-                monster = new Bat();
+                monster = MonsterFactory.getMonster("slime");
                 break;
             default:
-                monster = new Spider();
+                monster = MonsterFactory.getMonster("spider");
                 break;
         }
         

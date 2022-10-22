@@ -122,7 +122,7 @@ public final class Game {
 
         //10% chance to step on a trapped tile
         if (tileChance == 0)
-            tile = new TrapTile();
+            tile = TileFactory.getTile("trap");
         //10% chance to step on an item tile
         else if (tileChance  == 1)
             tile = new ItemTile();
@@ -131,12 +131,12 @@ public final class Game {
             int monsterOrChest = rand.nextInt(10);
             //70% chance for a monster, 30% chance for a chest
             if (monsterOrChest > 6)
-                tile = new ChestTile();
+                tile = TileFactory.getTile("chest");
             else
-                tile = new MonsterTile();
+                tile = TileFactory.getTile("monster");
         //40% Chance for nothing to happen
         } else
-            tile = new Tile();
+            tile = TileFactory.getTile("tile");
         
         return tile;
     }
