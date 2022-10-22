@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public final class Player {
+    private int id;
     private final String name;
     private int health, moveCount, monstersFought;
     private HashSet<Item> items; 
@@ -13,6 +14,7 @@ public final class Player {
     
     //Constructor for creating a new player
     public Player(String name) {
+        this.id = -1;
         this.name = name;
         this.health = 20;
         this.moveCount = 0;
@@ -22,13 +24,19 @@ public final class Player {
     }
     
     //Constructor for loading an existing player
-    public Player(String name, int health, int moveCount, int monstersFought, HashSet<Item> items) {
+    public Player(int id, String name, int health, int moveCount, int monstersFought, HashSet<Item> items) {
+        this.id = id;
         this.name = name;
         this.health = health;
         this.moveCount = moveCount;
         this.monstersFought = monstersFought;
         this.items = items;
         this.quitFlag = false;
+    }
+    
+    //Get the player's ID
+    public int getID() {
+        return this.id;
     }
 
     //Get the player's name
@@ -48,7 +56,7 @@ public final class Player {
     
     //Increment the player's movement count
     public void updateMoveCount() {
-        this.moveCount ++;
+        this.moveCount++;
     }
     
     //Get the number of monsters the player has fought
@@ -95,9 +103,8 @@ public final class Player {
         //If the player already has the item, increment the number of those items they have
         if (this.items.contains(item)) {
             for (Item i : this.items) {
-                if (i.equals(item)) {
+                if (i.equals(item))
                     i.numHeld++;
-                }
             }
         } else
             this.items.add(item);
@@ -121,7 +128,7 @@ public final class Player {
         if (this.items.isEmpty()) {
             System.out.println("You don't have any items!");
             return null;
-        }
+        }   
         
         Scanner scan = new Scanner(System.in);
         int selection, count;
