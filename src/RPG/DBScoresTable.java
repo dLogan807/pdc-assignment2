@@ -22,16 +22,10 @@ public class DBScoresTable extends DBTable {
     //Create the scores table
     @Override
     protected void createTable() {
-        try {
-            this.statement = conn.createStatement();
-            this.statement.executeUpdate("CREATE TABLE " + this.tableName + "("
-                                        + "score_id INT PRIMARY KEY,"
-                                        + "name VARCHAR(200), "
-                                        + "score INT)");
-        }
-        catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        dbManager.updateDB("CREATE TABLE " + this.tableName + "("
+                        + "score_id INT PRIMARY KEY,"
+                        + "name VARCHAR(200), "
+                        + "score INT)");
     }
 
     //Return the data of the SCORES table as a HashMap of scores
@@ -41,7 +35,7 @@ public class DBScoresTable extends DBTable {
         HashMap<String, Score> scores = new HashMap();
         
         try {
-            rs = this.statement.executeQuery("SELECT * FROM " + this.tableName);
+            rs = dbManager.queryDB("SELECT * FROM " + this.tableName);
             
             while (rs.next()) {
                 scores.put(rs.getString("name"), new Score(rs.getString("name"), rs.getInt("score")));
@@ -56,27 +50,23 @@ public class DBScoresTable extends DBTable {
     
     //Add a score to the SCORES table
     public void addScore(Score score) {
-        try {
-            this.statement.executeUpdate("INSERT INTO " + this.tableName
-                                        + " VALUES ("
-                                        + score.getName() + ","
-                                        + score.getScore() + ")");
-        }
-        catch (SQLException ex) {
-             System.out.println(ex.getMessage());
-        }
+        dbManager.updateDB("INSERT INTO " + this.tableName
+                        + " VALUES ("
+                        + score.getName() + ","
+                        + score.getScore() + ")");
     }
     
+    //Get the highest score from the SCORES table
     public Score getBestScore() {
         ResultSet rs = null;
         Score bestScore = null;
         
+        rs = dbManager.queryDB("SELECT name, score"
+                        + " FROM " + this.tableName
+                        + " ORDER BY score DESC "
+                        + "LIMIT 1");
+        
         try {
-            rs = this.statement.executeQuery("SELECT name, score"
-                                            + " FROM " + this.tableName
-                                            + " ORDER BY score DESC "
-                                            + "LIMIT 1");
-            
             bestScore = new Score(rs.getString("name"), rs.getInt("score"));
         }
         catch (SQLException ex) {

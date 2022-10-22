@@ -7,14 +7,27 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 public final class DBManager {
+    private static DBManager instance;
+    private final String URL = "jdbc:derby:RPGDB;create=true";
+    private Connection conn;
 
-    //Database connection details
-    private static final String URL = "jdbc:derby:RPGDB;create=true";
-
-    protected Connection conn;
-
-    public DBManager() {
+    //Private DBManager constructor
+    private DBManager() {
         establishConnection();
+    }
+    
+    //Return the singleton instance of the DBManager, creating it if it doesn't exist yet
+    public static DBManager getDBManagerInstance() {
+        if (instance == null)
+            instance = new DBManager();
+        
+        return instance;
+    }
+    
+    //Prevent the Database Manager singleton object instance from being cloned
+    @Override
+    public Object clone() throws CloneNotSupportedException {
+        throw new CloneNotSupportedException();
     }
 
     public Connection getConnection() {
@@ -33,6 +46,7 @@ public final class DBManager {
         }
     }
 
+    //Close the connection to the database
     public void closeConnections() {
         if (conn != null) {
             try {
@@ -56,6 +70,7 @@ public final class DBManager {
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
         }
+        
         return resultSet;
     }
 
@@ -63,7 +78,6 @@ public final class DBManager {
 
         Connection connection = this.conn;
         Statement statement = null;
-        ResultSet resultSet = null;
 
         try {
             statement = connection.createStatement();

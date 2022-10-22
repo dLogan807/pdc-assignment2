@@ -1,6 +1,5 @@
 package RPG;
 
-import java.sql.Connection;
 import java.sql.DatabaseMetaData;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,15 +8,13 @@ import java.util.HashMap;
 
 public abstract class DBTable {
 
-    private final DBManager dbManager;
-    protected final Connection conn;
+    protected final DBManager dbManager;
     protected Statement statement;
     protected String tableName;
 
     //Database Tables constructor
     public DBTable() {
-        dbManager = new DBManager();
-        conn = dbManager.getConnection();
+        dbManager = DBManager.getDBManagerInstance();
     }
     
     //Check if a table exists in the database
@@ -25,9 +22,9 @@ public abstract class DBTable {
         boolean exists = false;
         
         try {
-            DatabaseMetaData dbmd = this.conn.getMetaData();
+            DatabaseMetaData dbmd = dbManager.getConnection().getMetaData();
             String[] types = {"TABLE"};
-            statement = this.conn.createStatement();
+            statement = dbManager.getConnection().createStatement();
             ResultSet rs = dbmd.getTables(null, null, null, types);
             
             while (rs.next()) {
@@ -49,11 +46,7 @@ public abstract class DBTable {
     
     //Close the connection to the database
     public void closeConnection() {
-        try {
-            this.conn.close();
-        } catch (SQLException ex) {
-            System.out.println(ex.getMessage());
-        }
+        dbManager.closeConnections();
     }
     
     //Abstract methods:
