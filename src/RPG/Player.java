@@ -6,6 +6,7 @@ import java.util.Random;
 import java.util.Scanner;
 
 public final class Player {
+    private int id;
     private final String name;
     private int health, moveCount, monstersFought;
     private HashSet<Item> items; 
@@ -13,6 +14,7 @@ public final class Player {
     
     //Constructor for creating a new player
     public Player(String name) {
+        this.id = -1;
         this.name = name;
         this.health = 20;
         this.moveCount = 0;
@@ -22,13 +24,19 @@ public final class Player {
     }
     
     //Constructor for loading an existing player
-    public Player(String name, int health, int moveCount, int monstersFought, HashSet<Item> items) {
+    public Player(int id, String name, int health, int moveCount, int monstersFought, HashSet<Item> items) {
+        this.id = id;
         this.name = name;
         this.health = health;
         this.moveCount = moveCount;
         this.monstersFought = monstersFought;
         this.items = items;
         this.quitFlag = false;
+    }
+    
+    //Get the player's ID
+    public int getID() {
+        return this.id;
     }
 
     //Get the player's name

@@ -11,7 +11,7 @@ public final class DBManager {
     //Database connection details
     private static final String URL = "jdbc:derby:RPGDB;create=true";
 
-    Connection conn;
+    protected Connection conn;
 
     public DBManager() {
         establishConnection();
