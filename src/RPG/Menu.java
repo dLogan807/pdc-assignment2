@@ -8,6 +8,16 @@ public class Menu extends Observable {
     private DBSavesTable savesTable;
     private DBScoresTable scoresTable;
     
+    //Get the player
+    public Player getPlayer() {
+        return this.player;
+    }
+    
+    //Set the player
+    public void setPlayer(Player player) {
+        this.player = player;
+    }
+    
     public Menu() {
         this.savesTable = new DBSavesTable();
         this.scoresTable = new DBScoresTable();
@@ -19,13 +29,11 @@ public class Menu extends Observable {
     }
     
     //Return a String of player scores
-    private String getScores() {
+    public String getScores() {
         HashMap<String, Score> scores = this.scoresTable.getTableData();
         String scoreString = "";
         
-        if (scores.isEmpty())
-            scoreString = "No Scores";
-        else {
+        if (!scores.isEmpty()) {
             for (Score s : scores.values())
                 scoreString += s + "\n";
         }
@@ -34,7 +42,26 @@ public class Menu extends Observable {
     }
     
     //Get the best game score
-    private String getBestScore() {
-        return this.scoresTable.getBestScore().toString();
+    public String getBestScore() {
+        String scoreDetails;
+        
+        try {
+            scoreDetails = this.scoresTable.getBestScore().toString();
+        }
+        catch (NullPointerException ex) {
+            scoreDetails = "No scores yet!";
+        }
+        
+        return scoreDetails;
+    }
+    
+    //Return a HashMap of all saves in the database
+    public HashMap getSaves() {
+        return this.savesTable.getTableData();
+    }
+    
+    //Load the a player from the database using their id
+    public void loadPlayer(int id) {
+        this.player = this.savesTable.loadSave(id);
     }
 }

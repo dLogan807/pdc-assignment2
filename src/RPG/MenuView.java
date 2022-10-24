@@ -1,7 +1,16 @@
 package RPG;
 
+import java.util.HashMap;
 import java.util.Observable;
 import java.util.Observer;
+import javax.swing.ButtonGroup;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JLabel;
+import javax.swing.JRadioButton;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public class MenuView extends javax.swing.JPanel implements Observer {
 
@@ -10,6 +19,15 @@ public class MenuView extends javax.swing.JPanel implements Observer {
      */
     public MenuView() {
         initComponents();
+        
+        //Hide all components from other sections of the menu
+        this.scoresScrollPane.setVisible(false);
+        this.savesScrollPane.setVisible(false);
+        this.loadButton.setVisible(false);
+        this.backButton.setVisible(false);
+        this.nameLabel.setVisible(false);
+        this.nameTextField.setVisible(false);
+        this.beginGameButton.setVisible(false);
     }
 
     /**
@@ -21,6 +39,8 @@ public class MenuView extends javax.swing.JPanel implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        nameTextField = new javax.swing.JTextField();
+        savesScrollPane = new javax.swing.JScrollPane();
         newGameButton = new javax.swing.JButton();
         loadGameButton = new javax.swing.JButton();
         viewScoresButton = new javax.swing.JButton();
@@ -28,96 +48,200 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         titleLabel = new javax.swing.JLabel();
         bestScoreLabel = new javax.swing.JLabel();
         bestScoreHeaderLabel = new javax.swing.JLabel();
+        beginGameButton = new javax.swing.JButton();
+        loadButton = new javax.swing.JButton();
+        scoresScrollPane = new javax.swing.JScrollPane();
+        scoresTextArea = new javax.swing.JTextArea();
+        backButton = new javax.swing.JButton();
+        nameLabel = new javax.swing.JLabel();
 
         setBackground(new java.awt.Color(102, 102, 102));
         setNextFocusableComponent(newGameButton);
         setPreferredSize(new java.awt.Dimension(550, 500));
+        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        add(nameTextField, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 260, 220, -1));
+        add(savesScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 220, 290));
 
         newGameButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         newGameButton.setText("New Game");
+        add(newGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 279, 187, 47));
 
         loadGameButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         loadGameButton.setText("Load Game");
+        add(loadGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 344, 187, 47));
 
         viewScoresButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         viewScoresButton.setText("View Scores");
+        add(viewScoresButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 409, 187, 47));
 
         quitButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         quitButton.setText("Quit");
+        add(quitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 474, 187, 47));
 
         titleLabel.setFont(new java.awt.Font("Candara Light", 1, 48)); // NOI18N
         titleLabel.setText("Into the Depths");
+        add(titleLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(50, 121, -1, -1));
 
-        bestScoreLabel.setText("No scores yet");
+        bestScoreLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        bestScoreLabel.setText("No scores yet!");
         bestScoreLabel.setEnabled(false);
+        add(bestScoreLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(175, 214, -1, -1));
 
-        bestScoreHeaderLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        bestScoreHeaderLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
         bestScoreHeaderLabel.setText("Best Score");
+        add(bestScoreHeaderLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 187, -1, -1));
 
-        javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
-        this.setLayout(layout);
-        layout.setHorizontalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(50, 50, 50)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(newGameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 187, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(loadGameButton)
-                    .addComponent(viewScoresButton)
-                    .addComponent(quitButton)
-                    .addComponent(titleLabel)
-                    .addComponent(bestScoreLabel)
-                    .addComponent(bestScoreHeaderLabel))
-                .addGap(50, 50, 50))
-        );
+        beginGameButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        beginGameButton.setText("Begin Game");
+        beginGameButton.setEnabled(false);
+        beginGameButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                beginGameButtonActionPerformed(evt);
+            }
+        });
+        add(beginGameButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 550, 187, 47));
 
-        layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {loadGameButton, newGameButton, quitButton, viewScoresButton});
+        loadButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        loadButton.setText("Load");
+        loadButton.setEnabled(false);
+        add(loadButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 550, 187, 47));
 
-        layout.setVerticalGroup(
-            layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGap(121, 121, 121)
-                .addComponent(titleLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bestScoreHeaderLabel)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(bestScoreLabel)
-                .addGap(46, 46, 46)
-                .addComponent(newGameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 47, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(18, 18, 18)
-                .addComponent(loadGameButton)
-                .addGap(18, 18, 18)
-                .addComponent(viewScoresButton)
-                .addGap(18, 18, 18)
-                .addComponent(quitButton)
-                .addContainerGap(81, Short.MAX_VALUE))
-        );
+        scoresScrollPane.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        scoresScrollPane.setHorizontalScrollBar(null);
 
-        layout.linkSize(javax.swing.SwingConstants.VERTICAL, new java.awt.Component[] {loadGameButton, newGameButton, quitButton, viewScoresButton});
+        scoresTextArea.setEditable(false);
+        scoresTextArea.setColumns(20);
+        scoresTextArea.setRows(5);
+        scoresScrollPane.setViewportView(scoresTextArea);
 
+        add(scoresScrollPane, new org.netbeans.lib.awtextra.AbsoluteConstraints(120, 250, 220, 340));
+
+        backButton.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        backButton.setText("Back");
+        add(backButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(137, 610, 187, 47));
+
+        nameLabel.setFont(new java.awt.Font("Segoe UI", 1, 16)); // NOI18N
+        nameLabel.setText("Enter your name:");
+        add(nameLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(165, 220, -1, -1));
     }// </editor-fold>//GEN-END:initComponents
+
+    private void beginGameButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_beginGameButtonActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_beginGameButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton backButton;
+    private javax.swing.JButton beginGameButton;
     private javax.swing.JLabel bestScoreHeaderLabel;
     private javax.swing.JLabel bestScoreLabel;
+    private javax.swing.JButton loadButton;
     private javax.swing.JButton loadGameButton;
+    private javax.swing.JLabel nameLabel;
+    private javax.swing.JTextField nameTextField;
     private javax.swing.JButton newGameButton;
     private javax.swing.JButton quitButton;
+    private javax.swing.JScrollPane savesScrollPane;
+    private javax.swing.JScrollPane scoresScrollPane;
+    private javax.swing.JTextArea scoresTextArea;
     private javax.swing.JLabel titleLabel;
     private javax.swing.JButton viewScoresButton;
     // End of variables declaration//GEN-END:variables
-
-    @Override
-    public void update(Observable o, Object arg) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    private javax.swing.ButtonGroup savesButtonGroup;
+    
+    //Return the back button
+    public JButton getBackButton() {
+        return this.backButton;
     }
+    
+    //Return the begin game button
+    public JButton getBeginGameButton() {
+        return this.beginGameButton;
+    }
+    
+    //Return the best score header label
+    public JLabel getBestScoreHeaderLabel() {
+        return this.bestScoreHeaderLabel;
+    }
+    
+    //Return the best score label
+    public JLabel getBestScoreLabel() {
+        return this.bestScoreLabel;
+    }
+    
+    //Return the load button
+    public JButton getLoadButton() {
+        return this.loadButton;
+    }
+    
+    //Return the load game button
+    public JButton getLoadGameButton() {
+        return this.loadGameButton;
+    }
+    
+    //Return the name label
+    public JLabel getNameLabel() {
+        return this.nameLabel;
+    }
+    
+    //Return the name text field
+    public JTextField getNameTextField() {
+        return this.nameTextField;
+    }
+    
+    //Return the new game button
+    public JButton getNewGameButton() {
+        return this.newGameButton;
+    }
+    
+    //Return the quit button
+    public JButton getQuitButton() {
+        return this.quitButton;
+    }
+    
+    //Return the saves button group
+    public ButtonGroup getSavesButtonGroup() {
+        return this.savesButtonGroup;
+    }
+    
+    //Return the saves scroll pane
+    public JScrollPane getSavesScrollPane() {
+        return this.savesScrollPane;
+    }
+    
+    //Return the scores scroll pane
+    public JScrollPane getScoresScrollPane() {
+        return this.scoresScrollPane;
+    }
+    
+    //Return the scores text area
+    public JTextArea getScoresTextArea() {
+        return this.scoresTextArea;
+    }
+    
+    //Return the view scores button
+    public JButton getViewScoresButton() {
+        return this.viewScoresButton;
+    }
+    
+    //Sets the saves button group
+    public void setSavesButtonGroup(ButtonGroup group) {
+        this.savesButtonGroup = group;
+    }
+    
+    @Override
+    public void update(Observable o, Object arg) {}
     
     //Register the menu controller to the view
     public void addController(MenuController controller) {
         newGameButton.addActionListener(controller);
         loadGameButton.addActionListener(controller);
         viewScoresButton.addActionListener(controller);
+        backButton.addActionListener(controller);
         quitButton.addActionListener(controller);
+        loadButton.addActionListener(controller);
+        beginGameButton.addActionListener(controller);
+        
+        nameTextField.addKeyListener(controller);
     }
 }

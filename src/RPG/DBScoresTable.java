@@ -63,11 +63,11 @@ public class DBScoresTable extends DBTable {
         
         rs = dbManager.queryDB("SELECT name, score"
                         + " FROM " + this.tableName
-                        + " ORDER BY score DESC "
-                        + "LIMIT 1");
+                        + " WHERE score = (SELECT MAX(score) FROM " + this.tableName + ")");
         
         try {
-            bestScore = new Score(rs.getString("name"), rs.getInt("score"));
+            if (rs != null)
+                bestScore = new Score(rs.getString("name"), rs.getInt("score"));
         }
         catch (SQLException ex) {
             System.out.println(ex.getMessage());

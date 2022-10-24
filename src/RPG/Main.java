@@ -2,15 +2,14 @@ package RPG;
 
 import java.awt.BorderLayout;
 import java.net.URL;
-import java.util.InputMismatchException;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 public class Main {
-    private URL iconURL;
-    private ImageIcon icon;
+    private final URL iconURL;
+    private final ImageIcon icon;
     
-    private JFrame frame;
+    private final JFrame frame;
     protected Menu menu;
     private Game game;
     private Player player;
@@ -25,15 +24,15 @@ public class Main {
     }
     
     private JFrame setupFrame() {
-        JFrame frame = new JFrame("Into the Depths");
+        JFrame frameSetup = new JFrame("Into the Depths");
         
-        frame.setIconImage(this.icon.getImage());
-        frame.setResizable(false);
-        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setLayout(new BorderLayout());
-        frame.setSize(480, 800);
+        frameSetup.setIconImage(this.icon.getImage());
+        frameSetup.setResizable(false);
+        frameSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frameSetup.setLayout(new BorderLayout());
+        frameSetup.setSize(480, 800);
         
-        return frame;
+        return frameSetup;
     }
     
     private void initiateMenu() {
@@ -52,7 +51,5 @@ public class Main {
         main.initiateMenu();
         
         main.frame.setVisible(true);
-        
-        
     } 
 }

@@ -254,4 +254,9 @@ public final class Player {
         
         monster.updateHealth(0 - damage);
     }
+    
+    @Override
+    public String toString() {
+        return this.getID() + " " + this.getName();
+    }
 }
