@@ -1,5 +1,6 @@
 package RPG;
 
+import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -7,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.HashMap;
 import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
+import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
 public class MenuController implements ActionListener, KeyListener  {
@@ -28,24 +30,44 @@ public class MenuController implements ActionListener, KeyListener  {
     //Handle all button action events performed in the menu view
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equalsIgnoreCase("New Game"))
-            newGame();
-        if (e.getActionCommand().equalsIgnoreCase("Begin Game"))
+        if (e.getActionCommand().equals("New Game")) {
+            updateCardLayout(this.view.getNewGamePanel());
+        }
+
+        if (e.getActionCommand().equals("Begin Game")) {
             this.model.setPlayer(new Player(this.view.getNameTextField().getText()));
+            this.model.setLoaded(false);
+        }
         
-        if (e.getActionCommand().equalsIgnoreCase("Load Game"))
+        if (e.getActionCommand().equals("Load Game")) {
+            updateCardLayout(this.view.getLoadGamePanel());
             showSaves(this.model.getSaves());
-        if (e.getActionCommand().equalsIgnoreCase("Load"))
+        }
+            
+        if (e.getActionCommand().equals("Load")) {
             this.model.loadPlayer(getSelectedSave());
+            this.model.setLoaded(true);
+        }
         
-        if (e.getActionCommand().equalsIgnoreCase("View Scores"))
+        if (e.getActionCommand().equals("View Scores")) {
+            updateCardLayout(this.view.getViewScoresPanel());
             showScores(this.model.getScores());
+        }
         
-        if (e.getActionCommand().equalsIgnoreCase("Back"))
-            back();        
+        if (e.getActionCommand().equals("Back")) {
+            updateCardLayout(this.view.getMenuPanel());
+        }     
         
-        if (e.getActionCommand().equalsIgnoreCase("Quit"))
+        if (e.getActionCommand().equals("Quit"))
             System.exit(0);
+    }
+    
+    //Update the CardLayout to show a panel
+    private void updateCardLayout(JPanel panel) {
+        this.view.removeAll();
+        this.view.add(panel);
+        this.view.repaint();
+        this.view.revalidate();
     }
     
     //Unused method for if a key is typed
@@ -70,19 +92,11 @@ public class MenuController implements ActionListener, KeyListener  {
     public int getSelectedSave() {
         int id;
         String[] saveString;
-        
+   
         saveString = this.view.getSavesButtonGroup().getSelection().getActionCommand().split(" ");
         id = Integer.parseInt(saveString[0]);
         
         return id;
-    }
-
-    //Toggles the visiblity of a component
-    public void toggleVisibility(JComponent component) {
-        if (component.isVisible())
-            component.setVisible(false);
-        else
-            component.setVisible(true);
     }
     
     //Check whether a component is enabled
@@ -90,88 +104,43 @@ public class MenuController implements ActionListener, KeyListener  {
         return component.isEnabled();
     }
     
-    //Toggle whether the menu buttons are visible
-    public void toggleMenuButtons() {
-        toggleVisibility(this.view.getNewGameButton());
-        toggleVisibility(this.view.getLoadGameButton());
-        toggleVisibility(this.view.getViewScoresButton());
-        toggleVisibility(this.view.getQuitButton());
-    }
-    
     //Set the best score label to show the current best score
     public void setBestScore(String scoreDetails) {
         this.view.getBestScoreLabel().setText(scoreDetails);
     }
     
-    //Show the interface for starting a game
-    public void newGame() {
-        toggleMenuButtons();
-        toggleVisibility(this.view.getBestScoreHeaderLabel());
-        toggleVisibility(this.view.getBestScoreLabel());
-        
-        toggleVisibility(this.view.getNameLabel());
-        toggleVisibility(this.view.getNameTextField());
-        toggleVisibility(this.view.getBeginGameButton());
-        
-        toggleVisibility(this.view.getBackButton());
-    }
-    
     //Display all past the scores
     public void showScores(String scores) {
-        toggleMenuButtons();
-        
         this.view.getScoresTextArea().setText(scores);
-        toggleVisibility(this.view.getScoresScrollPane());
-        
-        toggleVisibility(this.view.getBackButton());
     }
     
     //Display all saves for loading in the form of a radio button selection
     public void showSaves(HashMap<Integer, Player> saves) {
-        this.view.setSavesButtonGroup(new ButtonGroup());
         
         if (!saves.isEmpty()) {
+            int y = 5;
+            boolean firstButton = true;
+            
             for (Player p : saves.values()) {
                 JRadioButton radioButton = new JRadioButton(p.toString());
+                radioButton.setActionCommand(p.toString());
+                radioButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+                
+                //Set the first radio button as selected
+                if (firstButton)
+                    radioButton.setSelected(true);
 
                 this.view.getSavesButtonGroup().add(radioButton);
-                this.view.getSavesScrollPane().add(radioButton);
+                this.view.getSavesPanel().add(radioButton);
+                
+                radioButton.setBounds(10, y, 100, 30);
+                
+                y += 30;
             }
-            
-            this.view.getLoadButton().setEnabled(true);
-        }
-        
-        toggleMenuButtons();
-        toggleVisibility(this.view.getBestScoreHeaderLabel());
-        toggleVisibility(this.view.getBestScoreLabel());
-        
-        toggleVisibility(this.view.getSavesScrollPane());
-        toggleVisibility(this.view.getLoadButton());
-        toggleVisibility(this.view.getBackButton());
-    }
     
-    //Return to the menu
-    public void back() {
-        if (this.view.getScoresScrollPane().isVisible())
-            toggleVisibility(this.view.getScoresScrollPane());
-        else if (this.view.getSavesScrollPane().isVisible()) {
-            toggleVisibility(this.view.getBestScoreHeaderLabel());
-            toggleVisibility(this.view.getBestScoreLabel());
+            this.view.getLoadButton().setEnabled(true);
             
-            toggleVisibility(this.view.getSavesScrollPane());
-            this.view.getLoadButton().setEnabled(false);
-            toggleVisibility(this.view.getLoadButton());
+            this.updateCardLayout(this.view.getLoadGamePanel());
         }
-        else if (this.view.getNameLabel().isVisible()) {
-            toggleVisibility(this.view.getBestScoreHeaderLabel());
-            toggleVisibility(this.view.getBestScoreLabel());
-
-            toggleVisibility(this.view.getNameLabel());
-            toggleVisibility(this.view.getNameTextField());
-            toggleVisibility(this.view.getBeginGameButton());
-        }
-
-        toggleVisibility(this.view.getBackButton());
-        toggleMenuButtons();
-    } 
+    }
 }

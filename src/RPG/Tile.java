@@ -30,8 +30,5 @@ public class Tile {
     //Do the tile's event
     public void doEvent(Player player) {
         System.out.println("You continue down the corridor.");
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {}
     }
 }

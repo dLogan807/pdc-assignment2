@@ -23,7 +23,7 @@ public class DBScoresTable extends DBTable {
     @Override
     protected void createTable() {
         dbManager.updateDB("CREATE TABLE " + this.tableName + "("
-                        + "score_id INT PRIMARY KEY,"
+                        + "score_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
                         + "name VARCHAR(200), "
                         + "score INT)");
     }
@@ -50,9 +50,9 @@ public class DBScoresTable extends DBTable {
     
     //Add a score to the SCORES table
     public void addScore(Score score) {
-        dbManager.updateDB("INSERT INTO " + this.tableName
+        dbManager.updateDB("INSERT INTO " + this.tableName + " (name, score)"
                         + " VALUES ("
-                        + score.getName() + ","
+                        + "'" + score.getName() + "'" + ","
                         + score.getScore() + ")");
     }
     
@@ -66,8 +66,9 @@ public class DBScoresTable extends DBTable {
                         + " WHERE score = (SELECT MAX(score) FROM " + this.tableName + ")");
         
         try {
-            if (rs != null)
+            if (rs.next()) {
                 bestScore = new Score(rs.getString("name"), rs.getInt("score"));
+            }
         }
         catch (SQLException ex) {
             System.out.println(ex.getMessage());

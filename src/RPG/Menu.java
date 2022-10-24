@@ -5,6 +5,7 @@ import java.util.Observable;
 
 public class Menu extends Observable {
     private Player player;
+    private boolean loaded;
     private DBSavesTable savesTable;
     private DBScoresTable scoresTable;
     
@@ -16,6 +17,16 @@ public class Menu extends Observable {
     //Set the player
     public void setPlayer(Player player) {
         this.player = player;
+    }
+    
+    //Get whether the game was loaded
+    public boolean getLoaded() {
+        return this.loaded;
+    }
+    
+    //Set whether the game was loaded
+    public void setLoaded(boolean loaded) {
+        this.loaded = loaded;
     }
     
     public Menu() {
@@ -63,5 +74,10 @@ public class Menu extends Observable {
     //Load the a player from the database using their id
     public void loadPlayer(int id) {
         this.player = this.savesTable.loadSave(id);
+    }
+    
+    //Save a player to the database
+    public void savePlayer() {
+        this.savesTable.save(this.player);
     }
 }
