@@ -11,6 +11,7 @@ public final class Player {
     private int health, moveCount, monstersFought;
     private HashSet<Item> items; 
     private boolean quitFlag; //If set, will quit the program
+    private String playerText;
     
     //Constructor for creating a new player
     public Player(String name) {
@@ -86,10 +87,6 @@ public final class Player {
     
     //Update the player's health, limiting to be between 0 & 20, inclusive
     public void updateHealth(int amount) {
-        if (amount > 0) 
-            System.out.println("You gain " + amount + " health!");
-        else
-            System.out.println("You take " + (amount * -1) + " damage!");
         this.health += amount;
         
         if (this.health > 20)
@@ -124,17 +121,11 @@ public final class Player {
     }
     
     //Retrieve an item from the player (shows menu of all items + cancel + quit)
-    public Item getPlayerItem() {
-        if (this.items.isEmpty()) {
-            System.out.println("You don't have any items!");
-            return null;
-        }   
+    public Item getPlayerItem() { 
         
-        Scanner scan = new Scanner(System.in);
         int selection, count;
         
         while (true) {
-            System.out.println("=======================");
             System.out.println("         Items");
 
             count = 1;
@@ -143,36 +134,7 @@ public final class Player {
                 count++;
             }
 
-            System.out.println("   " + count + ". Cancel");
-            System.out.println("   " + ++count + ". Quit");
-            System.out.println("=======================");
-            System.out.print("Enter your selection: ");
-
-            try {
-                selection = scan.nextInt();
-                if (selection > 0 && selection <= this.items.size() + 2)
-                    break;
-                else
-                    System.out.println("\nInvalid input.\nPlease enter a number from the item selection menu.\n");
-            }
-            catch (InputMismatchException e) {
-                System.out.println("\nInvalid input.\nPlease enter a number from the item selection menu.\n");
-            }
-
-            scan.nextLine();
         }
-        
-        //Player chose to cancel or quit
-        if (selection == this.items.size() + 1) {
-            System.out.println("\nYou zip up your backpack.");
-            return null;
-        }
-        else if (selection == this.items.size() + 2) {
-            this.quitFlag = true;
-            return null;
-        }
-        
-        System.out.println();
         
         //Return the selected item
         return getItemAtIndex(selection - 1);

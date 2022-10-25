@@ -15,18 +15,20 @@ public class Bat extends Monster {
         //50% chance to use the more powerful ram attack
         boolean ramAttack = this.rand.nextBoolean();
             if (ramAttack) {
-                System.out.println("The Bat bites you!");
+                this.monsterText = "The Bat bites you!";
                 damage++;
             }
             else
-                System.out.println("The Bat slashes at you!");
+                this.monsterText = "The Bat slashes at you!";
         
+        this.monsterText += "/n/nYou take " + damage + " damage!";
+            
         player.updateHealth(0 - damage);
     }
 
     //When the bat is not attacking
     @Override
     public void doNothing() {
-        System.out.println("The Bat issues a piercing sreech!");
+        this.monsterText = "The Bat issues a piercing sreech!";
     }
 }

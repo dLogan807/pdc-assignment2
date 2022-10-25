@@ -22,7 +22,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
     private void initComponents() {
 
         savesButtonGroup = new javax.swing.ButtonGroup();
-        MenuPanel = new javax.swing.JPanel();
+        menuPanel = new javax.swing.JPanel();
         titleLabel = new javax.swing.JLabel();
         bestScoreTitleLabel = new javax.swing.JLabel();
         bestScoreLabel = new javax.swing.JLabel();
@@ -52,7 +52,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
 
         setLayout(new java.awt.CardLayout());
 
-        MenuPanel.setBackground(new java.awt.Color(102, 102, 102));
+        menuPanel.setBackground(new java.awt.Color(102, 102, 102));
 
         titleLabel.setFont(new java.awt.Font("Candara Light", 1, 48)); // NOI18N
         titleLabel.setText("Into the Depths");
@@ -75,13 +75,13 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         quitButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         quitButton.setText("Quit");
 
-        javax.swing.GroupLayout MenuPanelLayout = new javax.swing.GroupLayout(MenuPanel);
-        MenuPanel.setLayout(MenuPanelLayout);
-        MenuPanelLayout.setHorizontalGroup(
-            MenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MenuPanelLayout.createSequentialGroup()
+        javax.swing.GroupLayout menuPanelLayout = new javax.swing.GroupLayout(menuPanel);
+        menuPanel.setLayout(menuPanelLayout);
+        menuPanelLayout.setHorizontalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPanelLayout.createSequentialGroup()
                 .addGap(60, 60, 60)
-                .addGroup(MenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                .addGroup(menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
                     .addComponent(quitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(viewScoresButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(loadGameButton, javax.swing.GroupLayout.PREFERRED_SIZE, 191, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -91,9 +91,9 @@ public class MenuView extends javax.swing.JPanel implements Observer {
                     .addComponent(titleLabel))
                 .addContainerGap(59, Short.MAX_VALUE))
         );
-        MenuPanelLayout.setVerticalGroup(
-            MenuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(MenuPanelLayout.createSequentialGroup()
+        menuPanelLayout.setVerticalGroup(
+            menuPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(menuPanelLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
                 .addComponent(titleLabel)
                 .addGap(28, 28, 28)
@@ -111,7 +111,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
                 .addContainerGap(264, Short.MAX_VALUE))
         );
 
-        add(MenuPanel, "card2");
+        add(menuPanel, "card2");
 
         viewScoresPanel.setBackground(new java.awt.Color(102, 102, 102));
 
@@ -272,7 +272,6 @@ public class MenuView extends javax.swing.JPanel implements Observer {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JPanel MenuPanel;
     private javax.swing.JButton beginGameButton;
     private javax.swing.JLabel bestScoreLabel;
     private javax.swing.JLabel bestScoreTitleLabel;
@@ -281,6 +280,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
     private javax.swing.JButton loadGameButton;
     private javax.swing.JPanel loadGamePanel;
     private javax.swing.JLabel loadGameTitleLabel;
+    private javax.swing.JPanel menuPanel;
     private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private javax.swing.JButton newGameBackButton;
@@ -308,7 +308,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
     }
     
     public javax.swing.JPanel getMenuPanel() {
-        return MenuPanel;
+        return menuPanel;
     }
 
     public javax.swing.JButton getBeginGameButton() {
@@ -391,6 +391,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         return viewScoresPanel;
     }
     
+    //Events the MenuController must listen for
     public void addController(MenuController controller) {
         this.getNewGameButton().addActionListener(controller);
         this.getLoadGameButton().addActionListener(controller);

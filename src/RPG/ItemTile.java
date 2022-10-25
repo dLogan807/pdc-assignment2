@@ -19,16 +19,16 @@ public class ItemTile extends Tile {
     //When the player steps on this tile
     @Override
     public void doEvent(Player player) {
-        System.out.println("You see something glint on the ground...");
+        this.eventText = "You see something glint on the ground...\n\n";
         
         //70% chance to find an item
         if (getEventTriggers()) {
-            System.out.println("You found a " + getItem().getName() + "!");
+            this.eventText += "You found a " + getItem().getName() + "!";
             
             player.addItemToPlayer(this.getItem());
         }
         else
-            System.out.println("It turned out to be nothing interesting.");
+            this.eventText += "It turned out to be nothing interesting.";
         
     }
     

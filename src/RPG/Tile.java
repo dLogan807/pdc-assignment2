@@ -5,6 +5,7 @@ import java.util.Random;
 public class Tile {
     protected Random rand;
     protected boolean eventTriggers;
+    protected String eventText;
     
     //Tile constructor
     public Tile() {
@@ -27,8 +28,12 @@ public class Tile {
         this.eventTriggers = eventTriggers;
     }
     
+    public String getEventText() {
+        return this.eventText;
+    }
+    
     //Do the tile's event
     public void doEvent(Player player) {
-        System.out.println("You continue down the corridor.");
+        this.eventText = "You continue down the corridor.";
     }
 }

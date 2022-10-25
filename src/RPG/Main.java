@@ -1,6 +1,5 @@
 package RPG;
 
-import java.awt.BorderLayout;
 import java.awt.CardLayout;
 import java.net.URL;
 import javax.swing.ImageIcon;
@@ -12,17 +11,23 @@ public class Main {
     private final ImageIcon icon;
     
     private final JFrame frame;
-    private CardLayout cards;
-    protected Menu menu;
-    protected MenuView menuView;
+    private final JPanel mainPanel;
+    private Menu menu;
+    private MenuView menuView;
     private Game game;
     private GameView gameView;
     private Player player;
+    
+    //Object to lock on
+    private final Object lock = new Object();
     
     //Main constructor
     public Main() {
         this.iconURL = getClass().getResource("resources/favicon.png");
         this.icon = new ImageIcon(iconURL);
+        
+        this.mainPanel = new JPanel();
+        this.mainPanel.setLayout(new CardLayout());
         
         this.frame = setupFrame();
     }
@@ -34,58 +39,44 @@ public class Main {
         frameSetup.setIconImage(this.icon.getImage());
         frameSetup.setResizable(false);
         frameSetup.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frameSetup.setSize(480, 800);
-        frameSetup.setVisible(true);
+        frameSetup.setContentPane(this.mainPanel);
+        frameSetup.setSize(500, 800);
         
         return frameSetup;
     }
     
-    //Updates the layout to a new one
-    private void setNewLayout() {
-        this.cards = new CardLayout();
-        this.frame.getContentPane().setLayout(cards);
+    //Update the CardLayout to show a panel
+    private void updateCardLayout(JPanel panel) {
+        this.mainPanel.removeAll();
+        this.mainPanel.add(panel);
+        this.mainPanel.repaint();
+        this.mainPanel.revalidate();
     }
     
     //Initiates the menu MVC
-    private void initiateMenu() {
-        setNewLayout();
-        
+    private void initiateMenu() {        
         this.menu = new Menu();
         
         this.menuView = new MenuView();
         this.menu.addObserver(menuView);
         
-        MenuController menuController = new MenuController(this.menu, this.menuView);
+        MenuController menuController = new MenuController(this.menu, this.menuView, this.lock);
         this.menuView.addController(menuController);
-        
-        this.frame.add(this.menuView);
-        this.cards.first(this.frame.getContentPane());
     }
     
-     //Initiates the game MVC
+    //Initiates the game MVC
     private void initiateGame(Player player, boolean loaded) {
         this.game = new Game(player, loaded);
         
         this.gameView = new GameView();
         this.game.addObserver(gameView);
         
-        GameController gameController = new GameController(this.game, gameView);
+        GameController gameController = new GameController(this.game, gameView, this.lock);
         this.gameView.addController(gameController);
-        
-        this.frame.add(this.gameView);
-        this.cards.next(this.frame.getContentPane());
-    }
-    
-    //Update the CardLayout to show a panel
-    private void updateCardLayout(JPanel panel) {
-        this.frame.removeAll();
-        this.frame.add(panel);
-        this.frame.repaint();
-        this.frame.revalidate();
     }
     
     //Returns true if the player is still playing
-    public boolean gameIsRunning() {
+    private boolean gameIsRunning() {
         return !this.game.getPlayer().getQuitFlag();
     }
     
@@ -93,19 +84,42 @@ public class Main {
     public static void main(String[] args) {
         Main main = new Main();
         main.initiateMenu();
+        main.updateCardLayout(main.menuView);
+        
+        main.frame.setVisible(true);
        
         //Main loop to handle the various MVCs
         while (true) {
-            //If the game has begun
-            if (main.menu.getPlayer() != null) {
-                main.initiateGame(main.menu.getPlayer(), main.menu.getLoaded());
-
-                //If the player has quit
-                if (!main.gameIsRunning()) {
-                    main.menu.savePlayer();
-                    main.initiateMenu();
+            //Wait for a game to begin
+            synchronized (main.lock) {
+                while (main.menu.getPlayer() == null) {
+                    try {
+                        main.lock.wait(); }
+                    catch (InterruptedException e) {
+                        //Interrupt acts as exit
+                        break;
+                    }
                 }
             }
+
+            main.initiateGame(main.menu.getPlayer(), main.menu.getLoaded());
+            main.updateCardLayout(main.gameView);
+            
+            //Wait for a game to end
+            synchronized (main.lock) {
+                while (main.gameIsRunning()) {
+                    try {
+                        main.lock.wait(); }
+                    catch (InterruptedException e) {
+                        //Interrupt acts as exit
+                        break;
+                    }
+                }
+            }
+            
+            main.menu.savePlayer();
+            main.initiateMenu();
+            main.updateCardLayout(main.menuView);
         }
     } 
 }

@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 public final class DBSavesTable extends DBTable {
     
+    //DBSavesTable constructor
     public DBSavesTable() {
         super();
         this.tableName = "SAVES";

@@ -12,7 +12,7 @@ public class TrapTile extends Tile {
     //Do the tile's event - probably set off a trap
     @Override
     public void doEvent(Player player) {
-        System.out.println("A pressure plate clicks!");
+        this.eventText = "A pressure plate clicks!\n";
         try {
             Thread.sleep(500);
         } catch (InterruptedException ex) {}
@@ -21,9 +21,9 @@ public class TrapTile extends Tile {
         if (!getEventTriggers()) {
             boolean dodged = this.getRand().nextBoolean();
             if (dodged)
-                System.out.println("You manage to evade the trap!");
+                this.eventText += "You manage to evade the trap!";
             else
-                System.out.println("Nothing seemed to happen.");
+                this.eventText += "Nothing seemed to happen.";
         } else {
             int damage = this.getRand().nextInt(3) + 1;
             player.updateHealth(0 - damage);

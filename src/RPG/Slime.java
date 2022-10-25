@@ -15,11 +15,13 @@ public class Slime extends Monster {
         //50% chance to use the more powerful ram attack
         boolean ramAttack = this.rand.nextBoolean();
             if (ramAttack) {
-                System.out.println("The Slime rams you!");
+                this.monsterText = "The Slime rams you!";
                 damage++;
             }
             else
-                System.out.println("The Slime spits goo at you!");
+                this.monsterText = "The Slime spits goo at you!";
+            
+        this.monsterText += "\n\nYou take " + damage + " damage!";
         
         player.updateHealth(0 - damage);
     }
@@ -27,6 +29,6 @@ public class Slime extends Monster {
     //The slime doesn't attack a player
     @Override
     public void doNothing() {
-        System.out.println("The Slime bubbles angrily.");
+        this.monsterText = "The Slime bubbles angrily.";
     }
 }

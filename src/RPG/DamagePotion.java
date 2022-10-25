@@ -18,9 +18,10 @@ public class DamagePotion extends Potion {
     //Deal damage to the player on using the potion
     @Override
     public void useItem(Player player) {
-        int damage = this.rand.nextInt(10);
+        int damage = this.rand.nextInt(5) + 5;
         
-        System.out.println("It tastes horrible!");
+        this.itemText = "It tastes horrible!\n";
+        this.itemText += "You take " + damage + " damage!";
         
         player.updateHealth(0 - damage);
     }
@@ -28,9 +29,7 @@ public class DamagePotion extends Potion {
     //When the player throws the item
     @Override
     public void throwItem() {
-        System.out.println("The potion makes a nasty");
-        System.out.println("sizzling sound as it shatters,");
-        System.out.println("but nothing happens.");
+        this.itemText = "The potion makes a nasty sizzling sound as it shatters, but nothing happens.";
     }
     
     //When the player throws the item at the monster
@@ -38,9 +37,7 @@ public class DamagePotion extends Potion {
     public void throwItem(Monster monster) {
         int damage = this.rand.nextInt(5) + 5;
         
-        System.out.println("The potion shatters");
-        System.out.println("over the " + monster.getName() + ",");
-        System.out.println("dealing " + damage + " damage!");
+        this.itemText = "The potion shatters over the " + monster.getName() + ", dealing " + damage + " damage!";
 
         monster.updateHealth(0 - damage);
     }

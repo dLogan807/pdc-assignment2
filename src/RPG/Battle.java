@@ -19,7 +19,7 @@ public final class Battle {
     
     //Commence the battle
     private void doBattle() {
-        System.out.println("A " + this.monster.getName() + " approaches!\n");
+        
         boolean escaped;
         
         //While the monster has health

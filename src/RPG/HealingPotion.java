@@ -19,7 +19,8 @@ public class HealingPotion extends Potion {
     public void useItem(Player player) {
         int health = this.rand.nextInt(5) + 5;
         
-        System.out.println("It tastes sweet!");
+        this.itemText = "It tastes sweet!\n\n";
+        this.itemText += "You gain " + health + " health!";
         
         player.updateHealth(health);
     }
@@ -27,8 +28,7 @@ public class HealingPotion extends Potion {
     //Display description of throwing the item
     @Override
     public void throwItem() {
-        System.out.println("The potion shatters,");
-        System.out.println("but nothing happens.");
+        this.itemText = "The potion shatters, but nothing happens.";
     }
 
     //When the player throws the item at the monster
@@ -36,10 +36,10 @@ public class HealingPotion extends Potion {
     public void throwItem(Monster monster) {
         int damage = this.rand.nextInt(5);
         
-        System.out.println("The potion shatters");
-        System.out.println("over the monster!");
-        System.out.println("It seems mildy");
-        System.out.println("annoyed by it.");
+        this.itemText = "The potion shatters over the monster!\n"
+                        + "It seems mildy annoyed by it.\n\n";
+        
+        this.itemText += "It takes " + damage + " damage!";
         
         monster.updateHealth(0 - damage);
     }

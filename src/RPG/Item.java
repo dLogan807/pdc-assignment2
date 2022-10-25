@@ -6,6 +6,7 @@ public abstract class Item {
     protected String name;
     protected int numHeld;
     protected Random rand;
+    protected String itemText;
     
     //Item constructor
     public Item() {

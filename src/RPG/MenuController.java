@@ -1,12 +1,12 @@
 package RPG;
 
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.util.HashMap;
-import javax.swing.ButtonGroup;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
@@ -14,10 +14,13 @@ import javax.swing.JRadioButton;
 public class MenuController implements ActionListener, KeyListener  {
     private Menu model;
     private MenuView view;
+    private final Object lock;
     
-    public MenuController(Menu model, MenuView view) {
+    public MenuController(Menu model, MenuView view, Object lock) {
         this.model = model;
         this.view = view;
+        
+        this.lock = lock;
         
         this.setBestScore();
     }
@@ -37,6 +40,8 @@ public class MenuController implements ActionListener, KeyListener  {
         if (e.getActionCommand().equals("Begin Game")) {
             this.model.setPlayer(new Player(this.view.getNameTextField().getText()));
             this.model.setLoaded(false);
+            
+            releaseLock();
         }
         
         if (e.getActionCommand().equals("Load Game")) {
@@ -47,6 +52,8 @@ public class MenuController implements ActionListener, KeyListener  {
         if (e.getActionCommand().equals("Load")) {
             this.model.loadPlayer(getSelectedSave());
             this.model.setLoaded(true);
+            
+            releaseLock();
         }
         
         if (e.getActionCommand().equals("View Scores")) {
@@ -60,6 +67,13 @@ public class MenuController implements ActionListener, KeyListener  {
         
         if (e.getActionCommand().equals("Quit"))
             System.exit(0);
+    }
+    
+    private void releaseLock() {
+        //Notify the main thread that the game has begun
+        synchronized (this.lock) {
+            this.lock.notifyAll();
+        }
     }
     
     //Update the CardLayout to show a panel
@@ -116,31 +130,46 @@ public class MenuController implements ActionListener, KeyListener  {
     
     //Display all saves for loading in the form of a radio button selection
     public void showSaves(HashMap<Integer, Player> saves) {
-        
         if (!saves.isEmpty()) {
             int y = 5;
-            boolean firstButton = true;
+            int extraPanelHeight = 0;
             
             for (Player p : saves.values()) {
-                JRadioButton radioButton = new JRadioButton(p.toString());
-                radioButton.setActionCommand(p.toString());
-                radioButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
-                
-                //Set the first radio button as selected
-                if (firstButton)
-                    radioButton.setSelected(true);
+                JRadioButton radioButton = generateRadioButton(p);
 
                 this.view.getSavesButtonGroup().add(radioButton);
                 this.view.getSavesPanel().add(radioButton);
                 
-                radioButton.setBounds(10, y, 100, 30);
+                radioButton.setBounds(10, y, 200, 30);
                 
                 y += 30;
+                
+                //Prepare increase in JPanel height if needed
+                if (y > 300) {
+                    extraPanelHeight += 25;
+                }
             }
-    
+            
+            increaseSavesPanelHeight(extraPanelHeight);
+            
             this.view.getLoadButton().setEnabled(true);
             
             this.updateCardLayout(this.view.getLoadGamePanel());
         }
+    }
+    
+    //Adds the specified height to the saves panel to allow for scrolling
+    private void increaseSavesPanelHeight(int height) {
+        this.view.getSavesPanel().setPreferredSize(new Dimension(268, (this.view.getSavesPanel().getHeight() + height)));
+    }
+    
+    //Generates a radio button with it's text set to the player's id and name
+    private JRadioButton generateRadioButton(Player player) {
+        JRadioButton radioButton = new JRadioButton(player.toString());
+        radioButton.setActionCommand(player.toString());
+        radioButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        radioButton.setSelected(true);  
+        
+        return radioButton;
     }
 }

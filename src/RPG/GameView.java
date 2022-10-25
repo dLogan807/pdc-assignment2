@@ -2,22 +2,14 @@ package RPG;
 
 import java.util.Observable;
 import java.util.Observer;
-import javax.swing.ButtonGroup;
-import javax.swing.JButton;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 public class GameView extends javax.swing.JPanel implements Observer {
 
     /**
-     * Creates new form MenuView
+     * Creates new form MenuView2
      */
     public GameView() {
         initComponents();
-        
-        //Hide all components from other sections of the game menus
     }
 
     /**
@@ -29,106 +21,325 @@ public class GameView extends javax.swing.JPanel implements Observer {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jScrollPane2 = new javax.swing.JScrollPane();
+        savesButtonGroup = new javax.swing.ButtonGroup();
+        gamePanel = new javax.swing.JPanel();
+        gameTitleLabel = new javax.swing.JLabel();
+        gameUseItemButton = new javax.swing.JButton();
+        gameTextAreaScrollPane = new javax.swing.JScrollPane();
         gameTextArea = new javax.swing.JTextArea();
-        continueForwardButton = new javax.swing.JButton();
-        useItemButton = new javax.swing.JButton();
+        continueFowardButton = new javax.swing.JButton();
         saveAndExitButton = new javax.swing.JButton();
-        healthLabel = new javax.swing.JLabel();
+        gamePlayerNameLabel = new javax.swing.JLabel();
+        gameHealthLabel = new javax.swing.JLabel();
+        itemPanel = new javax.swing.JPanel();
+        itemTitleLabel = new javax.swing.JLabel();
+        itemThrowItemButton = new javax.swing.JButton();
+        itemExitButton = new javax.swing.JButton();
+        itemPlayerNameLabel = new javax.swing.JLabel();
+        itemHealthLabel = new javax.swing.JLabel();
+        itemUseItemButton = new javax.swing.JButton();
+        itemBackButton = new javax.swing.JButton();
+        itemExitLabel = new javax.swing.JLabel();
+        itemItemsScrollPane = new javax.swing.JScrollPane();
+        itemSelectItemPanel = new javax.swing.JPanel();
+        battlePanel = new javax.swing.JPanel();
 
-        setBackground(new java.awt.Color(102, 102, 102));
-        setPreferredSize(new java.awt.Dimension(550, 500));
-        setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+        setPreferredSize(new java.awt.Dimension(480, 800));
+        setLayout(new java.awt.CardLayout());
+
+        gamePanel.setBackground(new java.awt.Color(102, 102, 102));
+        gamePanel.setPreferredSize(new java.awt.Dimension(480, 800));
+
+        gameTitleLabel.setFont(new java.awt.Font("Candara Light", 1, 48)); // NOI18N
+        gameTitleLabel.setText("Into the Depths");
+
+        gameUseItemButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        gameUseItemButton.setText("Use Item");
+        gameUseItemButton.setEnabled(false);
+
+        gameTextAreaScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
         gameTextArea.setEditable(false);
         gameTextArea.setColumns(20);
         gameTextArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         gameTextArea.setLineWrap(true);
         gameTextArea.setRows(5);
-        jScrollPane2.setViewportView(gameTextArea);
-        gameTextArea.getAccessibleContext().setAccessibleParent(this);
+        gameTextArea.setWrapStyleWord(true);
+        gameTextAreaScrollPane.setViewportView(gameTextArea);
 
-        add(jScrollPane2, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 580, 470, 180));
+        continueFowardButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        continueFowardButton.setText("Continue Forward");
 
-        continueForwardButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        continueForwardButton.setText("Continue Forward");
-        continueForwardButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                continueForwardButtonActionPerformed(evt);
-            }
-        });
-        add(continueForwardButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 540, -1, 40));
-
-        useItemButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
-        useItemButton.setText("Use Item");
-        useItemButton.setEnabled(false);
-        useItemButton.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                useItemButtonActionPerformed(evt);
-            }
-        });
-        add(useItemButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(177, 540, -1, 40));
-
-        saveAndExitButton.setFont(new java.awt.Font("Segoe UI", 0, 16)); // NOI18N
+        saveAndExitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
         saveAndExitButton.setText("Save & Exit to Menu");
-        add(saveAndExitButton, new org.netbeans.lib.awtextra.AbsoluteConstraints(290, 540, -1, 40));
 
-        healthLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        healthLabel.setForeground(new java.awt.Color(255, 255, 255));
-        healthLabel.setText("Health:");
-        add(healthLabel, new org.netbeans.lib.awtextra.AbsoluteConstraints(170, 500, -1, -1));
+        gamePlayerNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        gamePlayerNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        gamePlayerNameLabel.setText("Name");
+        gamePlayerNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+
+        gameHealthLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        gameHealthLabel.setForeground(new java.awt.Color(255, 255, 255));
+        gameHealthLabel.setText("Health: ?/20");
+
+        javax.swing.GroupLayout gamePanelLayout = new javax.swing.GroupLayout(gamePanel);
+        gamePanel.setLayout(gamePanelLayout);
+        gamePanelLayout.setHorizontalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(gameTextAreaScrollPane)
+            .addGroup(gamePanelLayout.createSequentialGroup()
+                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(gamePanelLayout.createSequentialGroup()
+                        .addGap(60, 60, 60)
+                        .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(gameHealthLabel)
+                            .addComponent(gameTitleLabel)
+                            .addComponent(gamePlayerNameLabel)))
+                    .addGroup(gamePanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(continueFowardButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(gameUseItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 105, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(saveAndExitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap(14, Short.MAX_VALUE))
+        );
+        gamePanelLayout.setVerticalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(gamePanelLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(gameTitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
+                .addComponent(gamePlayerNameLabel)
+                .addGap(18, 18, 18)
+                .addComponent(gameHealthLabel)
+                .addGap(18, 18, 18)
+                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(gameUseItemButton)
+                    .addComponent(saveAndExitButton)
+                    .addComponent(continueFowardButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(gameTextAreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        add(gamePanel, "card2");
+
+        itemPanel.setBackground(new java.awt.Color(102, 102, 102));
+        itemPanel.setPreferredSize(new java.awt.Dimension(480, 800));
+
+        itemTitleLabel.setFont(new java.awt.Font("Candara Light", 1, 48)); // NOI18N
+        itemTitleLabel.setText("Into the Depths");
+
+        itemThrowItemButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        itemThrowItemButton.setText("Throw Item");
+
+        itemExitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        itemExitButton.setText("Exit to Menu");
+
+        itemPlayerNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        itemPlayerNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        itemPlayerNameLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
+        itemPlayerNameLabel.setText("Name");
+
+        itemHealthLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        itemHealthLabel.setForeground(new java.awt.Color(255, 255, 255));
+        itemHealthLabel.setText("Health: ?/20");
+
+        itemUseItemButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        itemUseItemButton.setText("Use Item");
+
+        itemBackButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        itemBackButton.setText("Back");
+
+        itemExitLabel.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        itemExitLabel.setText("Game will not save!");
+
+        javax.swing.GroupLayout itemSelectItemPanelLayout = new javax.swing.GroupLayout(itemSelectItemPanel);
+        itemSelectItemPanel.setLayout(itemSelectItemPanelLayout);
+        itemSelectItemPanelLayout.setHorizontalGroup(
+            itemSelectItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 549, Short.MAX_VALUE)
+        );
+        itemSelectItemPanelLayout.setVerticalGroup(
+            itemSelectItemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 286, Short.MAX_VALUE)
+        );
+
+        itemItemsScrollPane.setViewportView(itemSelectItemPanel);
+
+        javax.swing.GroupLayout itemPanelLayout = new javax.swing.GroupLayout(itemPanel);
+        itemPanel.setLayout(itemPanelLayout);
+        itemPanelLayout.setHorizontalGroup(
+            itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemPanelLayout.createSequentialGroup()
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(itemPanelLayout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(itemUseItemButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemThrowItemButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemBackButton)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemPanelLayout.createSequentialGroup()
+                        .addContainerGap(182, Short.MAX_VALUE)
+                        .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(itemHealthLabel)
+                            .addComponent(itemPlayerNameLabel))
+                        .addGap(52, 52, 52)))
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(itemExitLabel)
+                    .addComponent(itemExitButton))
+                .addGap(6, 6, 6))
+            .addGroup(itemPanelLayout.createSequentialGroup()
+                .addGap(60, 60, 60)
+                .addComponent(itemTitleLabel)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addComponent(itemItemsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+        );
+        itemPanelLayout.setVerticalGroup(
+            itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(itemPanelLayout.createSequentialGroup()
+                .addGap(65, 65, 65)
+                .addComponent(itemTitleLabel)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemPanelLayout.createSequentialGroup()
+                        .addComponent(itemExitLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, itemPanelLayout.createSequentialGroup()
+                        .addComponent(itemPlayerNameLabel)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(itemHealthLabel)
+                        .addGap(20, 20, 20)))
+                .addGroup(itemPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(itemExitButton)
+                    .addComponent(itemBackButton)
+                    .addComponent(itemThrowItemButton)
+                    .addComponent(itemUseItemButton))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(itemItemsScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+        );
+
+        add(itemPanel, "card2");
+
+        javax.swing.GroupLayout battlePanelLayout = new javax.swing.GroupLayout(battlePanel);
+        battlePanel.setLayout(battlePanelLayout);
+        battlePanelLayout.setHorizontalGroup(
+            battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
+        battlePanelLayout.setVerticalGroup(
+            battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+
+        add(battlePanel, "card4");
     }// </editor-fold>//GEN-END:initComponents
-
-    private void continueForwardButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_continueForwardButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_continueForwardButtonActionPerformed
-
-    private void useItemButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_useItemButtonActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_useItemButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton continueForwardButton;
+    private javax.swing.JPanel battlePanel;
+    private javax.swing.JButton continueFowardButton;
+    private javax.swing.JLabel gameHealthLabel;
+    private javax.swing.JPanel gamePanel;
+    private javax.swing.JLabel gamePlayerNameLabel;
     private javax.swing.JTextArea gameTextArea;
-    private javax.swing.JLabel healthLabel;
-    private javax.swing.JScrollPane jScrollPane2;
+    private javax.swing.JScrollPane gameTextAreaScrollPane;
+    private javax.swing.JLabel gameTitleLabel;
+    private javax.swing.JButton gameUseItemButton;
+    private javax.swing.JButton itemBackButton;
+    private javax.swing.JButton itemExitButton;
+    private javax.swing.JLabel itemExitLabel;
+    private javax.swing.JLabel itemHealthLabel;
+    private javax.swing.JScrollPane itemItemsScrollPane;
+    private javax.swing.JPanel itemPanel;
+    private javax.swing.JLabel itemPlayerNameLabel;
+    private javax.swing.JPanel itemSelectItemPanel;
+    private javax.swing.JButton itemThrowItemButton;
+    private javax.swing.JLabel itemTitleLabel;
+    private javax.swing.JButton itemUseItemButton;
     private javax.swing.JButton saveAndExitButton;
-    private javax.swing.JButton useItemButton;
+    private javax.swing.ButtonGroup savesButtonGroup;
     // End of variables declaration//GEN-END:variables
-    
-    //Returns the continue forward button
-    public JButton getContinueForwardButton() {
-        return this.continueForwardButton;
+
+    public javax.swing.JPanel getBattlePanel() {
+        return battlePanel;
     }
 
-    //Returns the game text area
-    public JTextArea getGameTextArea() {
-        return this.gameTextArea;
-    }
-    
-    //Returns the health label
-    public JLabel getHealthLabel() {
-        return this.healthLabel;
-    }
-    
-    //Returns the save and exit button
-    public JButton getSaveAndExitButton() {
-        return this.saveAndExitButton;
+    public javax.swing.JButton getContinueFowardButton() {
+        return continueFowardButton;
     }
 
-    //Return the use item button
-    public JButton getUseItemButton() {
-        return this.useItemButton;
+    public javax.swing.JLabel getGameHealthLabel() {
+        return gameHealthLabel;
+    }
+
+    public javax.swing.JPanel getGamePanel() {
+        return gamePanel;
+    }
+
+    public javax.swing.JLabel getGamePlayerNameLabel() {
+        return gamePlayerNameLabel;
+    }
+
+    public javax.swing.JTextArea getGameTextArea() {
+        return gameTextArea;
+    }
+
+    public javax.swing.JButton getGameUseItemButton() {
+        return gameUseItemButton;
+    }
+
+    public javax.swing.JButton getItemBackButton() {
+        return itemBackButton;
+    }
+
+    public javax.swing.JButton getItemExitButton() {
+        return itemExitButton;
+    }
+
+    public javax.swing.JLabel getItemHealthLabel() {
+        return itemHealthLabel;
+    }
+
+    public javax.swing.JScrollPane getItemItemsScrollPane() {
+        return itemItemsScrollPane;
+    }
+
+    public javax.swing.JPanel getItemPanel() {
+        return itemPanel;
+    }
+
+    public javax.swing.JLabel getItemPlayerNameLabel() {
+        return itemPlayerNameLabel;
+    }
+
+    public javax.swing.JPanel getItemSelectItemPanel() {
+        return itemSelectItemPanel;
+    }
+
+    public javax.swing.JButton getItemThrowItemButton() {
+        return itemThrowItemButton;
+    }
+
+    public javax.swing.JButton getItemUseItemButton() {
+        return itemUseItemButton;
+    }
+
+    public javax.swing.JButton getSaveAndExitButton() {
+        return saveAndExitButton;
     }
     
     @Override
-    public void update(Observable o, Object arg) {}
+    public void update(Observable o, Object arg) {
+        
+    }
     
-    //Register the menu controller to the view
+    //Events the GameController must listen for
     public void addController(GameController controller) {
-        this.continueForwardButton.addActionListener(controller);
-        this.saveAndExitButton.addActionListener(controller);
-        this.useItemButton.addActionListener(controller);
+        this.getContinueFowardButton().addActionListener(controller);
+        this.getGameUseItemButton().addActionListener(controller);
+        this.getSaveAndExitButton().addActionListener(controller);
     }
 }

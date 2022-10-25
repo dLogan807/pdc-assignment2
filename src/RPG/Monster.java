@@ -6,6 +6,7 @@ public abstract class Monster {
     Random rand;
     protected String name;
     protected int health;
+    protected String monsterText;
     
     //Monster constructor
     public Monster() {

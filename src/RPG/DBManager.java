@@ -13,6 +13,9 @@ public final class DBManager {
 
     //Private DBManager constructor
     private DBManager() {
+        //Fix primary key values incrementing by 100
+        System.setProperty("derby.language.sequence.preallocator", String.valueOf(1));
+        
         establishConnection();
     }
     

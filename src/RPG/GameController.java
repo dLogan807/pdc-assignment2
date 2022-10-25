@@ -4,16 +4,21 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import javax.swing.JPanel;
 
 public class GameController implements ActionListener  {
     private Game model;
     private GameView view;
     private Random rand;
     
-    public GameController(Game model, GameView view) {
+    private final Object lock;
+    
+    public GameController(Game model, GameView view, Object lock) {
         this.model = model;
         this.view = view;
         this.rand = new Random();
+        
+        this.lock = lock;
         
         showIntro();
     }
@@ -32,6 +37,7 @@ public class GameController implements ActionListener  {
             setGameTextArea(text);
         }
         
+        setPlayerName();
         updateHealth();
     }
     
@@ -40,31 +46,72 @@ public class GameController implements ActionListener  {
         this.view.getGameTextArea().setText(text);
     }
     
+    //Set the player's name on screen (crops if too long)
+    private void setPlayerName() {
+        String fullName = this.model.getPlayer().getName();
+        int length = fullName.length();
+        
+        if (fullName.length() > 10)
+            length = 10;
+        
+        String name = fullName.substring(0, length);
+        
+        this.view.getGamePlayerNameLabel().setText(name);
+        this.view.getItemPlayerNameLabel().setText(name);
+    }
+    
     //Update the value of the player's health on screen and change the text's colour
     private void updateHealth() {
         int health = this.model.getPlayer().getHealth();
         
-        if (health < 5)
-            this.view.getHealthLabel().setForeground(Color.RED);
-        else if (health < 10)
-            this.view.getHealthLabel().setForeground(Color.YELLOW);
-        else
-            this.view.getHealthLabel().setForeground(Color.WHITE);
-        
-        this.view.getHealthLabel().setText("Health: " + health + "/20");
+        if (health < 5) {
+            this.view.getGameHealthLabel().setForeground(Color.RED);
+            this.view.getItemHealthLabel().setForeground(Color.RED);
+        } else if (health < 5) {
+            this.view.getGameHealthLabel().setForeground(Color.YELLOW);
+            this.view.getItemHealthLabel().setForeground(Color.YELLOW);
+        } else {
+            this.view.getGameHealthLabel().setForeground(Color.WHITE);
+            this.view.getItemHealthLabel().setForeground(Color.WHITE);
+        }
+            
+        this.view.getGameHealthLabel().setText("Health: " + health + "/20");
+        this.view.getItemHealthLabel().setText("Health: " + health + "/20");
     }
     
     //Handle all button action events performed in the menu view
     @Override
     public void actionPerformed(ActionEvent e) {
         if (e.getActionCommand().equals("Continue Forward"))
-            System.out.println("Forward!");
+            continueForward();
         
-        if (e.getActionCommand().equals("Use Item"))
-            System.out.println("Item!");
+        if (e.getActionCommand().equals("Use Item")) {
+            updateCardLayout(this.view.getItemPanel());
+            useItem();
+        }
+        
+        if (e.getActionCommand().equals("Back"))
+            //You zip up your backpack.";
         
         if (e.getActionCommand().equals("Save & Exit to Menu")) {
             this.model.getPlayer().setQuitFlag(true);
+            
+            releaseLock();
+        }
+    }
+    
+    //Update the CardLayout to show a panel
+    private void updateCardLayout(JPanel panel) {
+        this.view.removeAll();
+        this.view.add(panel);
+        this.view.repaint();
+        this.view.revalidate();
+    }
+    
+    private void releaseLock() {
+        //Notify the main thread that the game has begun
+        synchronized (this.lock) {
+            this.lock.notifyAll();
         }
     }
     
@@ -89,11 +136,10 @@ public class GameController implements ActionListener  {
         
         //Get the player's choice for the retrieved item
         int choice = player.doItemMenu(item);
+    }
+    
+    private void showItems() {
         
-        if (choice == 4) {
-            this.player.setQuitFlag(true);
-        } else if (choice != 3)
-            player.useItem(item, choice);
     }
     
     //Return a tile based on chance
