@@ -13,14 +13,14 @@ import javax.swing.ButtonModel;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class GameController implements ActionListener  {
+public class BattleController implements ActionListener  {
     private Game model;
     private GameView view;
     private Random rand;
     
     private final Object lock;
     
-    public GameController(Game model, GameView view, Object lock) {
+    public BattleController(Game model, GameView view, Object lock) {
         this.model = model;
         this.view = view;
         this.rand = new Random();
@@ -59,7 +59,13 @@ public class GameController implements ActionListener  {
     
     //Set the player's name on screen (crops if too long)
     private void setPlayerName() {
-        String name = this.model.getPlayer().getCroppedName();
+        String fullName = this.model.getPlayer().getName();
+        int length = fullName.length();
+        
+        if (fullName.length() > 10)
+            length = 10;
+        
+        String name = fullName.substring(0, length);
         
         this.view.getGamePlayerNameLabel().setText(name);
         this.view.getItemPlayerNameLabel().setText(name);
@@ -68,10 +74,17 @@ public class GameController implements ActionListener  {
     //Update the value of the player's health on screen and change the text's colour
     private void updateHealth() {
         int health = this.model.getPlayer().getHealth();
-        Color healthColour = this.model.getPlayer().getHealthColour();
         
-        this.view.getGameHealthLabel().setForeground(healthColour);
-        this.view.getItemHealthLabel().setForeground(healthColour);
+        if (health < 5) {
+            this.view.getGameHealthLabel().setForeground(Color.RED);
+            this.view.getItemHealthLabel().setForeground(Color.RED);
+        } else if (health < 10) {
+            this.view.getGameHealthLabel().setForeground(Color.YELLOW);
+            this.view.getItemHealthLabel().setForeground(Color.YELLOW);
+        } else {
+            this.view.getGameHealthLabel().setForeground(Color.WHITE);
+            this.view.getItemHealthLabel().setForeground(Color.WHITE);
+        }
             
         this.view.getGameHealthLabel().setText("Health: " + health + "/20");
         this.view.getItemHealthLabel().setText("Health: " + health + "/20");
@@ -93,12 +106,12 @@ public class GameController implements ActionListener  {
                 updateCardLayout(this.view.getItemPanel());
                 showItems();
             } else {
-                useSelectedItem();
+                useItem();
             }
         }
         
         if (e.getActionCommand().equals("Throw Item"))
-            throwSelectedItem();
+            throwItem();
         
         if (e.getActionCommand().equals("Back")) {
             updateCardLayout(this.view.getGamePanel());
@@ -145,8 +158,6 @@ public class GameController implements ActionListener  {
         setAllText(tile.getEventText());
         
         this.model.getPlayer().updateMoveCount();
-        updateHealth();
-        updateItemsButton();
     }
     
     //Return a tile based on chance
@@ -220,7 +231,7 @@ public class GameController implements ActionListener  {
     }
     
     //Use the item the player has selected
-    private void useSelectedItem() {
+    private void useItem() {
         Item item = this.model.getPlayer().getItemFromName(getSelectedItemName());
         this.model.getPlayer().useItem(item);
         setAllText(item.getItemText());
@@ -231,7 +242,7 @@ public class GameController implements ActionListener  {
     }
     
     //Throw the item the player has selected
-    private void throwSelectedItem() {
+    private void throwItem() {
         Item item = this.model.getPlayer().getItemFromName(getSelectedItemName());
         this.model.getPlayer().throwItem(item);
         setAllText(item.getItemText());

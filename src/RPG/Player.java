@@ -1,9 +1,8 @@
 package RPG;
 
+import java.awt.Color;
 import java.util.HashSet;
-import java.util.InputMismatchException;
 import java.util.Random;
-import java.util.Scanner;
 
 public final class Player {
     private int id;
@@ -22,6 +21,8 @@ public final class Player {
         this.monstersFought = 0;
         this.items = new HashSet();
         this.quitFlag = false;
+        
+        
     }
     
     //Constructor for loading an existing player
@@ -33,6 +34,9 @@ public final class Player {
         this.monstersFought = monstersFought;
         this.items = items;
         this.quitFlag = false;
+        
+        addItemToPlayer(new HealingPotion());
+        addItemToPlayer(new DamagePotion());
     }
     
     //Get the player's ID
@@ -85,6 +89,33 @@ public final class Player {
         this.quitFlag = quitFlag;
     }
     
+    //Returns a cropped version of the player's name if it's too long
+    public String getCroppedName() {
+        String croppedName, fullName = this.getName();
+        int length = fullName.length();
+        
+        if (fullName.length() > 10)
+            length = 10;
+        
+        croppedName = fullName.substring(0, length);
+        
+        return croppedName;
+    }
+    
+    //Get's what color the player's health should display as
+    public Color getHealthColour() {
+        Color healthColour;
+        
+        if (this.getHealth() < 5)
+            healthColour = Color.RED;
+        else if (this.getHealth() < 10)
+            healthColour = Color.ORANGE;
+        else
+            healthColour = Color.WHITE;
+        
+        return healthColour;
+    }
+    
     //Update the player's health, limiting to be between 0 & 20, inclusive
     public void updateHealth(int amount) {
         this.health += amount;
@@ -93,6 +124,11 @@ public final class Player {
             this.health = 20;
         else if (this.health < 0)
             this.health = 0;
+    }
+    
+    //Returns true if a player has items
+    public boolean hasItems() {
+        return !this.items.isEmpty();
     }
     
     //Add an item to the player's items
@@ -120,82 +156,26 @@ public final class Player {
         }
     }
     
-    //Retrieve an item from the player (shows menu of all items + cancel + quit)
-    public Item getPlayerItem() { 
-        
-        int selection, count;
-        
-        while (true) {
-            System.out.println("         Items");
-
-            count = 1;
-            for (Item i : this.items) {
-                System.out.println("   " + count + ". " + i.getName() + " [" + i.numHeld + " avail.]");
-                count++;
-            }
-
-        }
-        
-        //Return the selected item
-        return getItemAtIndex(selection - 1);
-    }
-    
-    //Returns the item at an index of the player's items
-    private Item getItemAtIndex(int index) {
-        int count = 0;
+    //Returns the item matching the given name
+    public Item getItemFromName(String itemName) {
         for (Item i : this.items) {
-            if (count == index) return i;
-            count++;
+            if (i.getName().equalsIgnoreCase(itemName)) 
+                return i;
         }
         
         return null;
     }
     
-    //Display a menu of actions for an item, returning the menu selection
-    public int doItemMenu(Item item) {
-        Scanner scan = new Scanner(System.in);
-        int selection = 0;
-        
-        System.out.println();
-        
-        while (true) {
-            System.out.println("=== " + item.getName() + " ===");
-            System.out.println("      Item Actions");
-            System.out.println("  1. Use item");
-            System.out.println("  2. Throw item");
-            System.out.println("  3. Cancel");
-            System.out.println("  4. Quit");
-            System.out.println("=======================");
-            System.out.print("Enter your selection: ");
-
-            try {
-                selection = scan.nextInt();
-                if (selection > 0 && selection <= 4)
-                    break;
-                else
-                    System.out.println("\nInvalid input.\nPlease enter a number from the list of item actions.\n");
-            }
-            catch (InputMismatchException e) {
-                System.out.println("\nInvalid input.\nPlease enter a number from the list of item actions.\n");
-            }
-
-            scan.nextLine();
-        }
-        
-        System.out.println();
-        
-        return selection;
+    //Use an item
+    public void useItem(Item item) {
+        item.useItem(this);
+        removeItemFromPlayer(item);
     }
     
-    //Use an item
-    public void useItem(Item item, int choice) {
-        if (choice == 1) {
-            item.useItem(this);
-            removeItemFromPlayer(item);
-        } else {
-            item.throwItem();
-            removeItemFromPlayer(item);
-        }
+    //Throw an item
+    public void throwItem(Item item) {
+        item.throwItem();
+        removeItemFromPlayer(item);
     }
     
     //Use an item against a monster

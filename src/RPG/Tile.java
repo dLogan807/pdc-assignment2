@@ -28,6 +28,7 @@ public class Tile {
         this.eventTriggers = eventTriggers;
     }
     
+    //Gets the event text
     public String getEventText() {
         return this.eventText;
     }

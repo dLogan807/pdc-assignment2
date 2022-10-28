@@ -44,8 +44,18 @@ public final class DBManager {
                 conn = DriverManager.getConnection(URL);
                 System.out.println(URL + "Connection successfully established...");
             } catch (SQLException ex) {
-                System.out.println(ex.getMessage());
+                System.out.println("Cannot access the embedded database from multiple programs simultaneously!");
             }
+        }
+        
+        verifyConnection();
+    }
+    
+    //Quit the program if a connection can't be established
+    public void verifyConnection() {
+        if (this.conn == null) {
+            System.out.println("Connected failed, exiting...");
+            System.exit(-1);
         }
     }
 

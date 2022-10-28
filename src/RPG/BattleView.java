@@ -4,12 +4,12 @@ import java.util.Observable;
 import java.util.Observer;
 import javax.swing.ButtonGroup;
 
-public class GameView extends javax.swing.JPanel implements Observer {
+public class BattleView extends javax.swing.JPanel implements Observer {
 
     /**
      * Creates new form MenuView2
      */
-    public GameView() {
+    public BattleView() {
         initComponents();
     }
 

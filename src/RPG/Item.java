@@ -19,6 +19,16 @@ public abstract class Item {
         return name;
     }    
     
+    //Gets the number of the item held by the player
+    public int getNumHeld() {
+        return this.numHeld;
+    }
+    
+    //Gets how the item's text
+    public String getItemText() {
+        return this.itemText;
+    }
+    
     //Abstract methods for the default operations of using and throwing the item
     public abstract void useItem(Player player);
     public abstract void throwItem();

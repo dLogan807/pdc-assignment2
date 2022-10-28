@@ -10,7 +10,7 @@ public class ChestTile extends ItemTile {
     //Add a randomly generated item to the player
     @Override
     public void doEvent(Player player) {
-        this.eventText = "You find a large chest.\nOpening it, you find a "
+        this.eventText = "You find a large chest.\n\nOpening it, you find a "
                           + this.getItem().getName() + "!";
             
         player.addItemToPlayer(this.getItem());

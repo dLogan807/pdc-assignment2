@@ -169,6 +169,8 @@ public class MenuView extends javax.swing.JPanel implements Observer {
 
         savesScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
+        savesPanel.setBackground(new java.awt.Color(255, 255, 255));
+
         javax.swing.GroupLayout savesPanelLayout = new javax.swing.GroupLayout(savesPanel);
         savesPanel.setLayout(savesPanelLayout);
         savesPanelLayout.setHorizontalGroup(

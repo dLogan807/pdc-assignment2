@@ -23,6 +23,11 @@ public abstract class Monster {
         return health;
     }
     
+    //Return the monster's text
+    public String getMonsterText() {
+        return this.monsterText;
+    }
+    
     //Update the monster's health from the amount
     public void updateHealth(int amount) {
         this.health += amount;

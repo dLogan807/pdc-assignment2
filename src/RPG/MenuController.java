@@ -1,5 +1,6 @@
 package RPG;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -135,7 +136,7 @@ public class MenuController implements ActionListener, KeyListener  {
             int extraPanelHeight = 0;
             
             for (Player p : saves.values()) {
-                JRadioButton radioButton = generateRadioButton(p);
+                JRadioButton radioButton = generateSaveRadioButton(p);
 
                 this.view.getSavesButtonGroup().add(radioButton);
                 this.view.getSavesPanel().add(radioButton);
@@ -164,10 +165,12 @@ public class MenuController implements ActionListener, KeyListener  {
     }
     
     //Generates a radio button with it's text set to the player's id and name
-    private JRadioButton generateRadioButton(Player player) {
+    private JRadioButton generateSaveRadioButton(Player player) {
         JRadioButton radioButton = new JRadioButton(player.toString());
         radioButton.setActionCommand(player.toString());
         radioButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        radioButton.setBackground(Color.WHITE);
+        
         radioButton.setSelected(true);  
         
         return radioButton;

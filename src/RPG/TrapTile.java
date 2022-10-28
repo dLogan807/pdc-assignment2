@@ -12,10 +12,7 @@ public class TrapTile extends Tile {
     //Do the tile's event - probably set off a trap
     @Override
     public void doEvent(Player player) {
-        this.eventText = "A pressure plate clicks!\n";
-        try {
-            Thread.sleep(500);
-        } catch (InterruptedException ex) {}
+        this.eventText = "A pressure plate clicks!\n\n";
         
         //80% chance for a trap to trigger and deal damage to the player
         if (!getEventTriggers()) {

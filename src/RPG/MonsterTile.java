@@ -12,10 +12,10 @@ public class MonsterTile extends Tile {
     //Do the tile's event - begin a battle
     @Override
     public void doEvent(Player player) {
-        this.eventText += "You find yourself faced with a monster!\n\n"
+        this.eventText = "You find yourself faced with a monster!\n\n"
                         + "A " + this.monster.getName() + " approaches!";
         
-        Battle battle = new Battle(player, this.monster);
+        //Battle battle = new Battle(player, this.monster);
     }
     
     //Return a random monster

@@ -20,7 +20,7 @@ public class DamagePotion extends Potion {
     public void useItem(Player player) {
         int damage = this.rand.nextInt(5) + 5;
         
-        this.itemText = "It tastes horrible!\n";
+        this.itemText = "It tastes horrible!\n\n";
         this.itemText += "You take " + damage + " damage!";
         
         player.updateHealth(0 - damage);
