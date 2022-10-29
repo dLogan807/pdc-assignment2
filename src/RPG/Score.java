@@ -31,7 +31,7 @@ public class Score {
         }
         Score other = (Score) o;
 
-        return (this.getName().equals(other.getName()));
+        return (name.equals(other.name));
     }
 
     //Create hashCode from the score's name
@@ -39,8 +39,8 @@ public class Score {
     public int hashCode() {
         int hashCode = 1;
 
-        for (int i = 0; i < this.getName().length(); i++) {
-            hashCode += this.getName().charAt(i);
+        for (int i = 0; i < name.length(); i++) {
+            hashCode += name.charAt(i);
         }
         hashCode = 781 * hashCode;
 
@@ -49,6 +49,6 @@ public class Score {
     
     @Override
     public String toString() {
-        return this.score + " " + this.name;
+        return score + " " + name;
     }
 }

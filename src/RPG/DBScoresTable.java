@@ -4,7 +4,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.HashMap;
 
-public class DBScoresTable extends DBTable {
+public final class DBScoresTable extends DBTable {
     
     public DBScoresTable() {
         super();
@@ -15,14 +15,14 @@ public class DBScoresTable extends DBTable {
     //Create the SCORES table if it doesn't already exist
     @Override
     protected void setupTable() {
-        if (!tableExists(this.tableName))
+        if (!tableExists(tableName))
             createTable();
     }
     
     //Create the scores table
     @Override
     protected void createTable() {
-        dbManager.updateDB("CREATE TABLE " + this.tableName + "("
+        dbManager.updateDB("CREATE TABLE " + tableName + "("
                         + "score_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
                         + "name VARCHAR(200), "
                         + "score INT)");
@@ -35,8 +35,7 @@ public class DBScoresTable extends DBTable {
         HashMap<String, Score> scores = new HashMap();
         
         try {
-            rs = dbManager.queryDB("SELECT * FROM " + this.tableName
-                                    + " ORDER BY score");
+            rs = dbManager.queryDB("SELECT * FROM " + tableName);
             
             while (rs.next()) {
                 scores.put(rs.getString("name"), new Score(rs.getString("name"), rs.getInt("score")));
@@ -51,7 +50,7 @@ public class DBScoresTable extends DBTable {
     
     //Add a score to the SCORES table
     public void addScore(Score score) {
-        dbManager.updateDB("INSERT INTO " + this.tableName + " (name, score)"
+        dbManager.updateDB("INSERT INTO " + tableName + " (name, score)"
                         + " VALUES ("
                         + "'" + score.getName() + "'" + ","
                         + score.getScore() + ")");
@@ -63,8 +62,8 @@ public class DBScoresTable extends DBTable {
         Score bestScore = null;
         
         rs = dbManager.queryDB("SELECT name, score"
-                        + " FROM " + this.tableName
-                        + " WHERE score = (SELECT MAX(score) FROM " + this.tableName + ")");
+                        + " FROM " + tableName
+                        + " WHERE score = (SELECT MAX(score) FROM " + tableName + ")");
         
         try {
             if (rs.next()) {

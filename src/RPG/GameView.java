@@ -257,78 +257,97 @@ public class GameView extends javax.swing.JPanel {
     private javax.swing.JButton saveAndExitButton;
     // End of variables declaration//GEN-END:variables
 
+    //Return the battle's panel
     public javax.swing.JPanel getBattlePanel() {
         return battlePanel;
     }
 
+    //Return the continue forward button
     public javax.swing.JButton getContinueFowardButton() {
         return continueFowardButton;
     }
 
+    //Return the player's game health label
     public javax.swing.JLabel getGameHealthLabel() {
         return gameHealthLabel;
     }
 
+    //Returns the game's panel
     public javax.swing.JPanel getGamePanel() {
         return gamePanel;
     }
 
+    //Return the player's game name label
     public javax.swing.JLabel getGamePlayerNameLabel() {
         return gamePlayerNameLabel;
     }
 
+    //Return the game's textArea
     public javax.swing.JTextArea getGameTextArea() {
         return gameTextArea;
     }
 
+    //Return the game's use item button
     public javax.swing.JButton getGameUseItemButton() {
         return gameUseItemButton;
     }
 
+    //Return the item menu back button
     public javax.swing.JButton getItemBackButton() {
         return itemBackButton;
     }
 
+    //Return the item menu exit button
     public javax.swing.JButton getItemExitButton() {
         return itemExitButton;
     }
 
+    //Return the item health label
     public javax.swing.JLabel getItemHealthLabel() {
         return itemHealthLabel;
     }
-
+    
+    //Return the item meny item scroll pane
     public javax.swing.JScrollPane getItemItemsScrollPane() {
         return itemItemsScrollPane;
     }
     
+    //Return the items button group
     public javax.swing.ButtonGroup getItemsButtonGroup() {
         return itemsButtonGroup;
     }
 
+    //Return the item panel
     public javax.swing.JPanel getItemPanel() {
         return itemPanel;
     }
 
+    //Return the player's item menu name label
     public javax.swing.JLabel getItemPlayerNameLabel() {
         return itemPlayerNameLabel;
     }
 
+    //Return the item menu's select item panel
     public javax.swing.JPanel getItemSelectItemPanel() {
         return itemSelectItemPanel;
     }
 
+    //Return the item menu's throw button
     public javax.swing.JButton getItemThrowItemButton() {
         return itemThrowItemButton;
     }
 
+    //Return the item menu's use item button
     public javax.swing.JButton getItemUseItemButton() {
         return itemUseItemButton;
     }
 
+    //Return the save and exit button
     public javax.swing.JButton getSaveAndExitButton() {
         return saveAndExitButton;
     }
     
+    //Set the battle panel
     public void setBattlePanel(BattleView battleView) {
         battlePanel = battleView;
     }

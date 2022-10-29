@@ -19,30 +19,30 @@ public class ItemTile extends Tile {
     //When the player steps on this tile
     @Override
     public void doEvent(Player player) {
-        this.eventText = "You see something glint on the ground...\n\n";
+        eventText = "You see something glint on the ground...\n\n";
         
         //70% chance to find an item
         if (getEventTriggers()) {
-            this.eventText += "You found a " + getItem().getName() + "!";
+            eventText += "You found a " + getItem().getName() + "!";
             
-            player.addItemToPlayer(this.getItem());
+            player.addItemToPlayer(getItem());
         }
         else
-            this.eventText += "It turned out to be nothing interesting.";
+            eventText += "It turned out to be nothing interesting.";
         
     }
     
-    //Return a random item
+    //Generate and return a random item
     private Item generateItem() {
-        int randItem = this.getRand().nextInt(2);
-        Item item;
+        int randItem = getRand().nextInt(2);
+        Item generatedItem;
         
         //Equal chance of getting any type of item
         if (randItem == 0)
-            item = ItemFactory.getItem("healing potion");
+            generatedItem = ItemFactory.getItem("healing potion");
         else
-            item = ItemFactory.getItem("damage potion");
+            generatedItem = ItemFactory.getItem("damage potion");
                     
-        return item;
+        return generatedItem;
     }
 }

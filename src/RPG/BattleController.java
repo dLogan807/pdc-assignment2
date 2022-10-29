@@ -4,11 +4,8 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.List;
 import java.util.Observable;
 import java.util.Random;
-import javax.swing.AbstractButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.Timer;
@@ -140,12 +137,13 @@ public class BattleController extends Observable implements ActionListener  {
         if (view.getAttackButton().isEnabled())
             enabled = false;
         
-        //Only enable the Use Item button if the player has items
-        if (enabled)
-            updateUseItemButton();
-        
         view.getAttackButton().setEnabled(enabled);
         view.getEscapeButton().setEnabled(enabled);
+        
+        //Only enable the Use Item button if the player has items
+        view.getUseItemButton().setEnabled(false);
+        if (enabled)
+            updateUseItemButton();
     }
     
     //Show all the player's items in the form of selectable radio buttons
@@ -218,7 +216,7 @@ public class BattleController extends Observable implements ActionListener  {
         boolean escaped = false;
         String text = "You try to escape...\n\n";
         
-        if (this.rand.nextBoolean()) {
+        if (rand.nextBoolean()) {
             text += "And slip past the " + model.getMonster().getName() + "!";
             escaped = true;
         } else {
@@ -255,7 +253,7 @@ public class BattleController extends Observable implements ActionListener  {
     
     //Do the monster's turn
     private void monsterTurn() {
-        int actionChance = this.rand.nextInt(10);
+        int actionChance = rand.nextInt(10);
         
         //80% chance to attack
         if (actionChance < 8) {

@@ -9,7 +9,6 @@ public final class Player {
     private final String name;
     private int health, moveCount, monstersFought;
     private HashSet<Item> items; 
-    private boolean quitFlag;
     private String playerText;
     
     //Constructor for creating a new player
@@ -20,7 +19,6 @@ public final class Player {
         this.moveCount = 0;
         this.monstersFought = 0;
         this.items = new HashSet();
-        this.quitFlag = false;
     }
     
     //Constructor for loading an existing player
@@ -31,7 +29,6 @@ public final class Player {
         this.moveCount = moveCount;
         this.monstersFought = monstersFought;
         this.items = items;
-        this.quitFlag = false;
     }
     
     //Get the player's ID
@@ -72,16 +69,6 @@ public final class Player {
     //Get the player's items
     public HashSet<Item> getItems() {
         return items;
-    }
-    
-    //Get player's quit flag
-    public boolean getQuitFlag() {
-        return quitFlag;
-    }
-    
-    //Set the player's quit flag
-    public void setQuitFlag(boolean quitFlag) {
-        this.quitFlag = quitFlag;
     }
     
     //Returns the player's text
@@ -194,6 +181,9 @@ public final class Player {
             ((Potion) item).throwItem(monster);
         
         removeItemFromPlayer(item);
+        
+        if (monster.isDead())
+            playerText += "You defeated the " + monster.getName() + "!";
     }
     
     //Attack a monster, dealing damage to it and returning the damage amount

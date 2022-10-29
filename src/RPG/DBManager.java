@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+//Note that this class follows the Singleton design pattern
 public final class DBManager {
     private static DBManager instance;
     private final String URL = "jdbc:derby:RPGDB;create=true";
@@ -33,16 +34,17 @@ public final class DBManager {
         throw new CloneNotSupportedException();
     }
 
+    //Return the database connection
     public Connection getConnection() {
-        return this.conn;
+        return conn;
     }
 
     //Establish a connection to the database
     public void establishConnection() {
-        if (this.conn == null) {
+        if (conn == null) {
             try {
                 conn = DriverManager.getConnection(URL);
-                System.out.println(URL + "—Connection successfully established.");
+                System.out.println(URL + "\n- Connection successfully established -");
             } catch (SQLException ex) {
                 System.out.println("Cannot access the embedded database from multiple programs simultaneously!");
             }
@@ -53,7 +55,7 @@ public final class DBManager {
     
     //Quit the program if a connection can't be established
     public void verifyConnection() {
-        if (this.conn == null) {
+        if (conn == null) {
             System.out.println("Connected failed, exiting...");
             System.exit(-1);
         }
@@ -70,9 +72,9 @@ public final class DBManager {
         }
     }
 
+    //Query the database on the query and return a ResultSet of the results
     public ResultSet queryDB(String sql) {
-
-        Connection connection = this.conn;
+        Connection connection = conn;
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -87,9 +89,9 @@ public final class DBManager {
         return resultSet;
     }
 
+    //Execute the SQL string on the database
     public void updateDB(String sql) {
-
-        Connection connection = this.conn;
+        Connection connection = conn;
         Statement statement = null;
 
         try {

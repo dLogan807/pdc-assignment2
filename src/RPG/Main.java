@@ -14,7 +14,6 @@ public class Main {
     private final JPanel mainPanel;
     private Menu menu;
     private MenuView menuView;
-    private Player player;
     
     //Main constructor
     public Main() {

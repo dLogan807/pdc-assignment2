@@ -14,7 +14,7 @@ public abstract class DBTable {
 
     //Database Tables constructor
     public DBTable() {
-        dbManager = DBManager.getDBManagerInstance();
+        this.dbManager = DBManager.getDBManagerInstance();
     }
     
     //Check if a table exists in the database

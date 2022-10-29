@@ -11,8 +11,8 @@ public class ChestTile extends ItemTile {
     @Override
     public void doEvent(Player player) {
         this.eventText = "You find a large chest.\n\nOpening it, you find a "
-                          + this.getItem().getName() + "!";
+                          + getItem().getName() + "!";
             
-        player.addItemToPlayer(this.getItem());
+        player.addItemToPlayer(getItem());
     }
 }
