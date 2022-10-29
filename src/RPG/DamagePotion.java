@@ -24,6 +24,9 @@ public class DamagePotion extends Potion {
         this.itemText += "You take " + damage + " damage!";
         
         player.updateHealth(0 - damage);
+        
+        if (player.isDead())
+            itemText += "\n\nYou died...";
     }
 
     //When the player throws the item

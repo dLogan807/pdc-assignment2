@@ -1,10 +1,6 @@
 package RPG;
 
-import java.util.Observable;
-import java.util.Observer;
-import javax.swing.ButtonGroup;
-
-public class BattleView extends javax.swing.JPanel implements Observer {
+public class BattleView extends javax.swing.JPanel {
 
     /**
      * Creates new form MenuView2
@@ -23,15 +19,16 @@ public class BattleView extends javax.swing.JPanel implements Observer {
     private void initComponents() {
 
         itemsButtonGroup = new javax.swing.ButtonGroup();
-        gamePanel = new javax.swing.JPanel();
-        gameTitleLabel = new javax.swing.JLabel();
-        gameUseItemButton = new javax.swing.JButton();
-        gameTextAreaScrollPane = new javax.swing.JScrollPane();
-        gameTextArea = new javax.swing.JTextArea();
-        continueFowardButton = new javax.swing.JButton();
-        saveAndExitButton = new javax.swing.JButton();
-        gamePlayerNameLabel = new javax.swing.JLabel();
-        gameHealthLabel = new javax.swing.JLabel();
+        battlePanel = new javax.swing.JPanel();
+        battleTitleLabel = new javax.swing.JLabel();
+        useItemButton = new javax.swing.JButton();
+        battleTextAreaScrollPane = new javax.swing.JScrollPane();
+        battleTextArea = new javax.swing.JTextArea();
+        attackButton = new javax.swing.JButton();
+        exitButton = new javax.swing.JButton();
+        battlePlayerNameLabel = new javax.swing.JLabel();
+        battleHealthLabel = new javax.swing.JLabel();
+        escapeButton = new javax.swing.JButton();
         itemPanel = new javax.swing.JPanel();
         itemTitleLabel = new javax.swing.JLabel();
         itemThrowItemButton = new javax.swing.JButton();
@@ -42,90 +39,98 @@ public class BattleView extends javax.swing.JPanel implements Observer {
         itemBackButton = new javax.swing.JButton();
         itemItemsScrollPane = new javax.swing.JScrollPane();
         itemSelectItemPanel = new javax.swing.JPanel();
-        battlePanel = new javax.swing.JPanel();
 
         setPreferredSize(new java.awt.Dimension(480, 800));
         setLayout(new java.awt.CardLayout());
 
-        gamePanel.setBackground(new java.awt.Color(102, 102, 102));
-        gamePanel.setPreferredSize(new java.awt.Dimension(480, 800));
+        battlePanel.setBackground(new java.awt.Color(102, 102, 102));
+        battlePanel.setPreferredSize(new java.awt.Dimension(480, 800));
 
-        gameTitleLabel.setFont(new java.awt.Font("Candara Light", 1, 48)); // NOI18N
-        gameTitleLabel.setText("Into the Depths");
+        battleTitleLabel.setFont(new java.awt.Font("Candara Light", 1, 48)); // NOI18N
+        battleTitleLabel.setText("Into the Depths");
 
-        gameUseItemButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        gameUseItemButton.setText("Use Item");
+        useItemButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        useItemButton.setText("Use Item");
 
-        gameTextAreaScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+        battleTextAreaScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
-        gameTextArea.setEditable(false);
-        gameTextArea.setBackground(new java.awt.Color(255, 255, 255));
-        gameTextArea.setColumns(20);
-        gameTextArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
-        gameTextArea.setLineWrap(true);
-        gameTextArea.setRows(5);
-        gameTextArea.setWrapStyleWord(true);
-        gameTextArea.setMargin(new java.awt.Insets(5, 10, 2, 6));
-        gameTextAreaScrollPane.setViewportView(gameTextArea);
+        battleTextArea.setEditable(false);
+        battleTextArea.setBackground(new java.awt.Color(255, 255, 255));
+        battleTextArea.setColumns(20);
+        battleTextArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
+        battleTextArea.setLineWrap(true);
+        battleTextArea.setRows(5);
+        battleTextArea.setWrapStyleWord(true);
+        battleTextArea.setMargin(new java.awt.Insets(5, 10, 2, 6));
+        battleTextAreaScrollPane.setViewportView(battleTextArea);
 
-        continueFowardButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        continueFowardButton.setText("Continue Forward");
+        attackButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        attackButton.setText("Attack");
 
-        saveAndExitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        saveAndExitButton.setText("Save & Exit");
+        exitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        exitButton.setText("Exit to Menu");
 
-        gamePlayerNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
-        gamePlayerNameLabel.setForeground(new java.awt.Color(255, 255, 255));
-        gamePlayerNameLabel.setText("Name");
-        gamePlayerNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        battlePlayerNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
+        battlePlayerNameLabel.setForeground(new java.awt.Color(255, 255, 255));
+        battlePlayerNameLabel.setText("Name");
+        battlePlayerNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
 
-        gameHealthLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        gameHealthLabel.setForeground(new java.awt.Color(255, 255, 255));
-        gameHealthLabel.setText("Health: ?/20");
+        battleHealthLabel.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
+        battleHealthLabel.setForeground(new java.awt.Color(255, 255, 255));
+        battleHealthLabel.setText("Health: ?/20");
 
-        javax.swing.GroupLayout gamePanelLayout = new javax.swing.GroupLayout(gamePanel);
-        gamePanel.setLayout(gamePanelLayout);
-        gamePanelLayout.setHorizontalGroup(
-            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(gameTextAreaScrollPane)
-            .addGroup(gamePanelLayout.createSequentialGroup()
-                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(gamePanelLayout.createSequentialGroup()
-                        .addGap(60, 60, 60)
-                        .addComponent(gameTitleLabel))
-                    .addGroup(gamePanelLayout.createSequentialGroup()
+        escapeButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
+        escapeButton.setText("Escape");
+
+        javax.swing.GroupLayout battlePanelLayout = new javax.swing.GroupLayout(battlePanel);
+        battlePanel.setLayout(battlePanelLayout);
+        battlePanelLayout.setHorizontalGroup(
+            battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addComponent(battleTextAreaScrollPane)
+            .addGroup(battlePanelLayout.createSequentialGroup()
+                .addGroup(battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(battlePanelLayout.createSequentialGroup()
                         .addContainerGap()
-                        .addComponent(continueFowardButton)
+                        .addComponent(attackButton, javax.swing.GroupLayout.PREFERRED_SIZE, 96, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(gameUseItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 145, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(useItemButton, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(saveAndExitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(gamePanelLayout.createSequentialGroup()
-                        .addGap(181, 181, 181)
-                        .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                            .addComponent(gameHealthLabel)
-                            .addComponent(gamePlayerNameLabel))))
-                .addContainerGap(14, Short.MAX_VALUE))
+                        .addComponent(escapeButton, javax.swing.GroupLayout.DEFAULT_SIZE, 101, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(exitButton, javax.swing.GroupLayout.PREFERRED_SIZE, 140, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(battlePanelLayout.createSequentialGroup()
+                        .addGroup(battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(battlePanelLayout.createSequentialGroup()
+                                .addGap(60, 60, 60)
+                                .addComponent(battleTitleLabel))
+                            .addGroup(battlePanelLayout.createSequentialGroup()
+                                .addGap(181, 181, 181)
+                                .addGroup(battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                                    .addComponent(battleHealthLabel)
+                                    .addComponent(battlePlayerNameLabel))))
+                        .addGap(0, 0, Short.MAX_VALUE)))
+                .addContainerGap())
         );
-        gamePanelLayout.setVerticalGroup(
-            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(gamePanelLayout.createSequentialGroup()
+        battlePanelLayout.setVerticalGroup(
+            battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(battlePanelLayout.createSequentialGroup()
                 .addGap(65, 65, 65)
-                .addComponent(gameTitleLabel)
+                .addComponent(battleTitleLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 259, Short.MAX_VALUE)
-                .addComponent(gamePlayerNameLabel)
+                .addComponent(battlePlayerNameLabel)
                 .addGap(18, 18, 18)
-                .addComponent(gameHealthLabel)
+                .addComponent(battleHealthLabel)
                 .addGap(18, 18, 18)
-                .addGroup(gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
-                    .addComponent(gameUseItemButton)
-                    .addComponent(saveAndExitButton)
-                    .addComponent(continueFowardButton))
+                .addGroup(battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                    .addComponent(useItemButton)
+                    .addComponent(exitButton)
+                    .addComponent(attackButton)
+                    .addComponent(escapeButton))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(gameTextAreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(battleTextAreaScrollPane, javax.swing.GroupLayout.PREFERRED_SIZE, 288, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
-        add(gamePanel, "card2");
+        add(battlePanel, "card2");
 
         itemPanel.setBackground(new java.awt.Color(102, 102, 102));
         itemPanel.setPreferredSize(new java.awt.Dimension(480, 800));
@@ -137,7 +142,7 @@ public class BattleView extends javax.swing.JPanel implements Observer {
         itemThrowItemButton.setText("Throw Item");
 
         itemExitButton.setFont(new java.awt.Font("Segoe UI", 1, 15)); // NOI18N
-        itemExitButton.setText("Save & Exit");
+        itemExitButton.setText("Exit to Menu");
 
         itemPlayerNameLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
         itemPlayerNameLabel.setForeground(new java.awt.Color(255, 255, 255));
@@ -219,32 +224,19 @@ public class BattleView extends javax.swing.JPanel implements Observer {
         );
 
         add(itemPanel, "card2");
-
-        javax.swing.GroupLayout battlePanelLayout = new javax.swing.GroupLayout(battlePanel);
-        battlePanel.setLayout(battlePanelLayout);
-        battlePanelLayout.setHorizontalGroup(
-            battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 480, Short.MAX_VALUE)
-        );
-        battlePanelLayout.setVerticalGroup(
-            battlePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 800, Short.MAX_VALUE)
-        );
-
-        add(battlePanel, "card4");
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton attackButton;
+    private javax.swing.JLabel battleHealthLabel;
     private javax.swing.JPanel battlePanel;
-    private javax.swing.JButton continueFowardButton;
-    private javax.swing.JLabel gameHealthLabel;
-    private javax.swing.JPanel gamePanel;
-    private javax.swing.JLabel gamePlayerNameLabel;
-    private javax.swing.JTextArea gameTextArea;
-    private javax.swing.JScrollPane gameTextAreaScrollPane;
-    private javax.swing.JLabel gameTitleLabel;
-    private javax.swing.JButton gameUseItemButton;
+    private javax.swing.JLabel battlePlayerNameLabel;
+    private javax.swing.JTextArea battleTextArea;
+    private javax.swing.JScrollPane battleTextAreaScrollPane;
+    private javax.swing.JLabel battleTitleLabel;
+    private javax.swing.JButton escapeButton;
+    private javax.swing.JButton exitButton;
     private javax.swing.JButton itemBackButton;
     private javax.swing.JButton itemExitButton;
     private javax.swing.JLabel itemHealthLabel;
@@ -256,35 +248,39 @@ public class BattleView extends javax.swing.JPanel implements Observer {
     private javax.swing.JLabel itemTitleLabel;
     private javax.swing.JButton itemUseItemButton;
     private javax.swing.ButtonGroup itemsButtonGroup;
-    private javax.swing.JButton saveAndExitButton;
+    private javax.swing.JButton useItemButton;
     // End of variables declaration//GEN-END:variables
 
     public javax.swing.JPanel getBattlePanel() {
         return battlePanel;
     }
 
-    public javax.swing.JButton getContinueFowardButton() {
-        return continueFowardButton;
+    public javax.swing.JButton getAttackButton() {
+        return attackButton;
     }
 
-    public javax.swing.JLabel getGameHealthLabel() {
-        return gameHealthLabel;
+    public javax.swing.JLabel getBattleHealthLabel() {
+        return battleHealthLabel;
     }
 
-    public javax.swing.JPanel getGamePanel() {
-        return gamePanel;
+    public javax.swing.JLabel getBattlePlayerNameLabel() {
+        return battlePlayerNameLabel;
     }
 
-    public javax.swing.JLabel getGamePlayerNameLabel() {
-        return gamePlayerNameLabel;
+    public javax.swing.JTextArea getBattleTextArea() {
+        return battleTextArea;
     }
 
-    public javax.swing.JTextArea getGameTextArea() {
-        return gameTextArea;
+    public javax.swing.JButton getUseItemButton() {
+        return useItemButton;
     }
 
-    public javax.swing.JButton getGameUseItemButton() {
-        return gameUseItemButton;
+    public javax.swing.JButton getEscapeButton() {
+        return escapeButton;
+    }
+
+    public javax.swing.JButton getExitButton() {
+        return exitButton;
     }
 
     public javax.swing.JButton getItemBackButton() {
@@ -301,10 +297,6 @@ public class BattleView extends javax.swing.JPanel implements Observer {
 
     public javax.swing.JScrollPane getItemItemsScrollPane() {
         return itemItemsScrollPane;
-    }
-    
-    public javax.swing.ButtonGroup getItemsButtonGroup() {
-        return itemsButtonGroup;
     }
 
     public javax.swing.JPanel getItemPanel() {
@@ -323,28 +315,28 @@ public class BattleView extends javax.swing.JPanel implements Observer {
         return itemThrowItemButton;
     }
 
+    public javax.swing.JLabel getItemTitleLabel() {
+        return itemTitleLabel;
+    }
+
     public javax.swing.JButton getItemUseItemButton() {
         return itemUseItemButton;
     }
 
-    public javax.swing.JButton getSaveAndExitButton() {
-        return saveAndExitButton;
-    }
-    
-    @Override
-    public void update(Observable o, Object arg) {
-        
+    public javax.swing.ButtonGroup getItemsButtonGroup() {
+        return itemsButtonGroup;
     }
     
     //Events the GameController must listen for
-    public void addController(GameController controller) {
-        this.getContinueFowardButton().addActionListener(controller);
-        this.getGameUseItemButton().addActionListener(controller);
-        this.getSaveAndExitButton().addActionListener(controller);
+    public void addController(BattleController controller) {
+        attackButton.addActionListener(controller);
+        useItemButton.addActionListener(controller);
+        escapeButton.addActionListener(controller);
+        exitButton.addActionListener(controller);
         
-        this.getItemBackButton().addActionListener(controller);
-        this.getItemUseItemButton().addActionListener(controller);
-        this.getItemExitButton().addActionListener(controller);
-        this.getItemThrowItemButton().addActionListener(controller);
+        itemUseItemButton.addActionListener(controller);
+        itemThrowItemButton.addActionListener(controller);
+        itemBackButton.addActionListener(controller);
+        itemExitButton.addActionListener(controller);
     }
 }

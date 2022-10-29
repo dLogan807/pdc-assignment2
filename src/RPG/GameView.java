@@ -1,10 +1,8 @@
 package RPG;
 
-import java.util.Observable;
-import java.util.Observer;
 import javax.swing.ButtonGroup;
 
-public class GameView extends javax.swing.JPanel implements Observer {
+public class GameView extends javax.swing.JPanel {
 
     /**
      * Creates new form MenuView2
@@ -331,9 +329,8 @@ public class GameView extends javax.swing.JPanel implements Observer {
         return saveAndExitButton;
     }
     
-    @Override
-    public void update(Observable o, Object arg) {
-        
+    public void setBattlePanel(BattleView battleView) {
+        battlePanel = battleView;
     }
     
     //Events the GameController must listen for

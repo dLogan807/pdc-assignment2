@@ -21,9 +21,12 @@ public class Bat extends Monster {
             else
                 this.monsterText = "The Bat slashes at you!";
         
-        this.monsterText += "/n/nYou take " + damage + " damage!";
+        this.monsterText += "\n\nYou take " + damage + " damage!";
             
         player.updateHealth(0 - damage);
+        
+        if (player.isDead())
+            monsterText += "\n\nThe Bat killed you...";
     }
 
     //When the bat is not attacking

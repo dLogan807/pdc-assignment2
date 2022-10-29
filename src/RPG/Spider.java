@@ -23,6 +23,10 @@ public class Spider extends Monster {
         this.monsterText += "\n\nYou take " + damage + " damage!";
             
         player.updateHealth(0 - damage);
+        
+        if (player.isDead())
+            monsterText += "\n\nThe Spider killed you...";
+        
     }
 
     //When the spider doesn't attack a player

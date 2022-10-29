@@ -17,7 +17,8 @@ public final class DBSavesTable extends DBTable {
     //Create the SAVES table if it doesn't already exist
     @Override
     protected void setupTable() {
-        //dbManager.updateDB("DROP TABLE SAVES");
+//        dbManager.updateDB("DROP TABLE SAVES");
+//        dbManager.updateDB("DROP TABLE SCORES");
         if (!tableExists(this.tableName))
             createTable();
     }
@@ -168,5 +169,20 @@ public final class DBSavesTable extends DBTable {
                         + player.getMoveCount() + ", "
                         + player.getMonstersFought() + ", "
                         + "'" + player.getItems().toString() + "'" + ")");
+    }
+    
+    //Returns true if a save with this id exists in the table
+    public boolean saveExists(int id) {
+        ResultSet rs = dbManager.queryDB("SELECT * FROM " + tableName
+                        + " WHERE save_id = " + id);
+        
+        try {
+            if (rs.next())
+                return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return false;
     }
 }

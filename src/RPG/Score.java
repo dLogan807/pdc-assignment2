@@ -49,6 +49,6 @@ public class Score {
     
     @Override
     public String toString() {
-        return this.name + " " + this.score;
+        return this.score + " " + this.name;
     }
 }

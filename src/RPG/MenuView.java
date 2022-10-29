@@ -1,9 +1,8 @@
 package RPG;
 
-import java.util.Observable;
-import java.util.Observer;
+import javax.swing.JPanel;
 
-public class MenuView extends javax.swing.JPanel implements Observer {
+public class MenuView extends javax.swing.JPanel {
 
     /**
      * Creates new form MenuView2
@@ -49,6 +48,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         nameLabel = new javax.swing.JLabel();
         newGameBackButton = new javax.swing.JButton();
         nameTextField = new javax.swing.JTextField();
+        gamePanel = new javax.swing.JPanel();
 
         setLayout(new java.awt.CardLayout());
 
@@ -61,6 +61,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         bestScoreTitleLabel.setText("Best Score");
 
         bestScoreLabel.setFont(new java.awt.Font("Segoe UI", 0, 17)); // NOI18N
+        bestScoreLabel.setForeground(new java.awt.Color(255, 255, 255));
         bestScoreLabel.setText("No scores yet!");
 
         newGameButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
@@ -121,9 +122,14 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         scoresBackButton.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
         scoresBackButton.setText("Back");
 
+        scoresScrollPane.setHorizontalScrollBarPolicy(javax.swing.ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
+
         scoresTextArea.setEditable(false);
+        scoresTextArea.setBackground(new java.awt.Color(255, 255, 255));
         scoresTextArea.setColumns(20);
+        scoresTextArea.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         scoresTextArea.setRows(5);
+        scoresTextArea.setMargin(new java.awt.Insets(5, 10, 2, 6));
         scoresScrollPane.setViewportView(scoresTextArea);
 
         scoresPanelTitleLabel.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -270,6 +276,19 @@ public class MenuView extends javax.swing.JPanel implements Observer {
         );
 
         add(newGamePanel, "card2");
+
+        javax.swing.GroupLayout gamePanelLayout = new javax.swing.GroupLayout(gamePanel);
+        gamePanel.setLayout(gamePanelLayout);
+        gamePanelLayout.setHorizontalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 480, Short.MAX_VALUE)
+        );
+        gamePanelLayout.setVerticalGroup(
+            gamePanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGap(0, 800, Short.MAX_VALUE)
+        );
+
+        add(gamePanel, "card6");
     }// </editor-fold>//GEN-END:initComponents
 
 
@@ -277,6 +296,7 @@ public class MenuView extends javax.swing.JPanel implements Observer {
     private javax.swing.JButton beginGameButton;
     private javax.swing.JLabel bestScoreLabel;
     private javax.swing.JLabel bestScoreTitleLabel;
+    private javax.swing.JPanel gamePanel;
     private javax.swing.JButton loadButton;
     private javax.swing.JButton loadGameBackButton;
     private javax.swing.JButton loadGameButton;
@@ -304,11 +324,6 @@ public class MenuView extends javax.swing.JPanel implements Observer {
     private javax.swing.JPanel viewScoresPanel;
     // End of variables declaration//GEN-END:variables
 
-    @Override
-    public void update(Observable o, Object arg) {
-        
-    }
-    
     public javax.swing.JPanel getMenuPanel() {
         return menuPanel;
     }
@@ -319,6 +334,10 @@ public class MenuView extends javax.swing.JPanel implements Observer {
 
     public javax.swing.JLabel getBestScoreLabel() {
         return bestScoreLabel;
+    }
+    
+    public javax.swing.JPanel getGamePanel() {
+        return gamePanel;
     }
 
     public javax.swing.JButton getLoadButton() {
@@ -391,6 +410,10 @@ public class MenuView extends javax.swing.JPanel implements Observer {
 
     public javax.swing.JPanel getViewScoresPanel() {
         return viewScoresPanel;
+    }
+    
+    public void setGamePanel(JPanel gamePanel) {
+        this.gamePanel = gamePanel;
     }
     
     //Events the MenuController must listen for

@@ -5,25 +5,47 @@ import java.util.Observable;
 public final class Game extends Observable {
     private final Player player;
     private Battle battle;
-    private boolean loaded;
+    private BattleView battleView;
+    private BattleController battleController;
     
     //Construct a game
-    public Game(Player player, boolean loaded) {
+    public Game(Player player) {
         this.player = player;
-        this.loaded = loaded;
     }
     
+    //Return the player
     public Player getPlayer() {
         return this.player;
     }
     
-    //Get whether the game was loaded
-    public boolean getLoaded() {
-        return this.loaded;
+    //Returns the battle model
+    public Battle getBattle() {
+        return battle;
     }
     
-    //Sets the battle object
+    //Returns the battle's view
+    public BattleView getBattleView() {
+        return battleView;
+    }
+    
+    //Returns the battle's controller
+    public BattleController getBattleController() {
+        return battleController;
+    }
+    
+    //Sets the battle model
     public void setBattle(Battle battle) {
         this.battle = battle;
     }
+    
+    //Sets the battle's view
+    public void setBattleView(BattleView battleView) {
+        this.battleView = battleView;
+    }
+    
+    //Sets the battle's controller
+    public void setBattleController(BattleController battleController) {
+        this.battleController = battleController;
+    }
+    
 }

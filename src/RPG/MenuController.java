@@ -7,84 +7,75 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
+import javax.swing.AbstractButton;
 import javax.swing.JComponent;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 
-public class MenuController implements ActionListener, KeyListener  {
-    private Menu model;
-    private MenuView view;
-    private final Object lock;
+public class MenuController implements ActionListener, KeyListener, Observer  {
+    private final Menu model;
+    private final MenuView view;
     
-    public MenuController(Menu model, MenuView view, Object lock) {
+    //Constructor
+    public MenuController(Menu model, MenuView view) {
         this.model = model;
         this.view = view;
         
-        this.lock = lock;
-        
-        this.setBestScore();
+        setBestScore();
     }
     
-    //Set the best score
-    public void setBestScore() {
-        setBestScore(this.model.getBestScore());
+    //Set up a game and display it
+    private void initiateGame(Player player) {
+        model.setGame(new Game(player));
+        model.setGameView(new GameView());
+        model.setGameController(new GameController(model.getGame(), model.getGameView()));
+
+        model.getGameView().addController(model.getGameController());
+        model.getGameController().addObserver(this);
+        
+        view.setGamePanel(model.getGameView());
+        updateCardLayout(view.getGamePanel());
     }
 
     //Handle all button action events performed in the menu view
     @Override
     public void actionPerformed(ActionEvent e) {
-        if (e.getActionCommand().equals("New Game")) {
-            updateCardLayout(this.view.getNewGamePanel());
-        }
-
-        if (e.getActionCommand().equals("Begin Game")) {
-            this.model.setPlayer(new Player(this.view.getNameTextField().getText()));
-            this.model.setLoaded(false);
-            
-            releaseLock();
-        }
+        String command = e.getActionCommand();
         
-        if (e.getActionCommand().equals("Load Game")) {
-            updateCardLayout(this.view.getLoadGamePanel());
-            showSaves(this.model.getSaves());
-        }
-            
-        if (e.getActionCommand().equals("Load")) {
-            this.model.loadPlayer(getSelectedSave());
-            this.model.setLoaded(true);
-            
-            releaseLock();
-        }
-        
-        if (e.getActionCommand().equals("View Scores")) {
-            updateCardLayout(this.view.getViewScoresPanel());
-            showScores(this.model.getScores());
-        }
-        
-        if (e.getActionCommand().equals("Back")) {
-            updateCardLayout(this.view.getMenuPanel());
-        }     
-        
-        if (e.getActionCommand().equals("Quit"))
-            System.exit(0);
+        switch (command) {
+            case "New Game":
+                updateCardLayout(view.getNewGamePanel());
+                break;
+            case "Begin Game":
+                model.setPlayer(new Player(view.getNameTextField().getText()));
+                initiateGame(model.getPlayer());
+                break;
+            case "Load Game":
+                showSaves(model.getSaves());
+                updateCardLayout(view.getLoadGamePanel());
+                break;
+            case "Load":
+                model.loadPlayer(getSelectedSave());
+                initiateGame(model.getPlayer());
+                break;
+            case "View Scores":
+                updateCardLayout(view.getViewScoresPanel());
+                showScores(model.getScores());
+                break;
+            case "Back":
+                updateCardLayout(view.getMenuPanel());
+                break;
+            case "Quit":
+                System.exit(0);
+                break;
+        }   
     }
-    
-    private void releaseLock() {
-        //Notify the main thread that the game has begun
-        synchronized (this.lock) {
-            this.lock.notifyAll();
-        }
-    }
-    
-    //Update the CardLayout to show a panel
-    private void updateCardLayout(JPanel panel) {
-        this.view.removeAll();
-        this.view.add(panel);
-        this.view.repaint();
-        this.view.revalidate();
-    }
-    
+        
     //Unused method for if a key is typed
     @Override
     public void keyTyped(KeyEvent e) {}
@@ -93,86 +84,129 @@ public class MenuController implements ActionListener, KeyListener  {
     @Override
     public void keyPressed(KeyEvent e) {}
 
-    //Enable / disable the begin game button depending on whether a name has been typed
+    //Handle an event if a key is released
     @Override
     public void keyReleased(KeyEvent e) {
-        if (this.view.getNameTextField().getText().equals("")) {
-            this.view.getBeginGameButton().setEnabled(false);
-        } else {
-            this.view.getBeginGameButton().setEnabled(true);
-        }
+        updateBeginGameButton();
+    }
+    
+    //Update the CardLayout to show a panel
+    private void updateCardLayout(JPanel panel) {
+        view.removeAll();
+        view.add(panel);
+        view.repaint();
+        view.revalidate();
+    }
+    
+    //Enable / disable the begin game button depending on whether a name has been typed
+    private void updateBeginGameButton() {
+        if (view.getNameTextField().getText().equals(""))
+            view.getBeginGameButton().setEnabled(false);
+        else
+            view.getBeginGameButton().setEnabled(true);
     }
     
     //Returns the id of the selected save
-    public int getSelectedSave() {
+    private int getSelectedSave() {
         int id;
         String[] saveString;
    
-        saveString = this.view.getSavesButtonGroup().getSelection().getActionCommand().split(" ");
+        saveString = view.getSavesButtonGroup().getSelection().getActionCommand().split(" ");
         id = Integer.parseInt(saveString[0]);
         
         return id;
     }
     
     //Check whether a component is enabled
-    public boolean isEnabled(JComponent component) {
+    private boolean isEnabled(JComponent component) {
         return component.isEnabled();
     }
     
     //Set the best score label to show the current best score
-    public void setBestScore(String scoreDetails) {
-        this.view.getBestScoreLabel().setText(scoreDetails);
+    private void setBestScore() {
+        view.getBestScoreLabel().setText(model.getBestScore());
     }
     
     //Display all past the scores
-    public void showScores(String scores) {
-        this.view.getScoresTextArea().setText(scores);
+    private void showScores(String scores) {
+        view.getScoresTextArea().setText(scores);
     }
     
     //Display all saves for loading in the form of a radio button selection
-    public void showSaves(HashMap<Integer, Player> saves) {
-        if (!saves.isEmpty()) {
-            int y = 5;
-            int extraPanelHeight = 0;
-            
-            for (Player p : saves.values()) {
-                JRadioButton radioButton = generateSaveRadioButton(p);
+    private void showSaves(HashMap<Integer, Player> saves) {
+        view.getSavesPanel().removeAll();
+        
+        boolean firstButton = true;
+        
+        int y = 5;
+        int extraPanelHeight = 0;
 
-                this.view.getSavesButtonGroup().add(radioButton);
-                this.view.getSavesPanel().add(radioButton);
-                
-                radioButton.setBounds(10, y, 200, 30);
-                
-                y += 30;
-                
-                //Prepare increase in JPanel height if needed
-                if (y > 300) {
-                    extraPanelHeight += 25;
-                }
+        for (Player p : saves.values()) {
+            JRadioButton radioButton = generateSaveRadioButton(p, y);
+
+            view.getSavesButtonGroup().add(radioButton);
+            view.getSavesPanel().add(radioButton);
+
+            //Set the first JRadioButton as selected
+            if (firstButton) {
+                radioButton.setSelected(true);
+                firstButton = false;
             }
-            
-            increaseSavesPanelHeight(extraPanelHeight);
-            
-            this.view.getLoadButton().setEnabled(true);
-            
-            this.updateCardLayout(this.view.getLoadGamePanel());
+
+            y += 30;
+
+            //Prepare increase in JPanel height if needed
+            if (y > 300) {
+                extraPanelHeight += 25;
+            }
         }
+
+        increaseSavesPanelHeight(extraPanelHeight);
+
+        updateLoadButton();
     }
     
     //Adds the specified height to the saves panel to allow for scrolling
     private void increaseSavesPanelHeight(int height) {
-        this.view.getSavesPanel().setPreferredSize(new Dimension(268, (this.view.getSavesPanel().getHeight() + height)));
+        view.getSavesPanel().setPreferredSize(new Dimension(268, (view.getSavesPanel().getHeight() + height)));
     }
     
     //Generates a radio button with it's text set to the player's id and name
-    private JRadioButton generateSaveRadioButton(Player player) {
+    private JRadioButton generateSaveRadioButton(Player player, int y) {
         JRadioButton radioButton = new JRadioButton(player.toString());
+        
         radioButton.setActionCommand(player.toString());
         radioButton.setFont(new Font("Segoe UI", Font.PLAIN, 16));
         radioButton.setBackground(Color.WHITE);
-        
-        radioButton.setSelected(true);  
+        radioButton.setBounds(10, y, 200, 30);
         
         return radioButton;
+    }
+    
+    //Enables / Disables the load button depending on whether saves are available
+    public void updateLoadButton() {
+        boolean enabled = !model.getSaves().isEmpty();
+        
+        view.getLoadButton().setEnabled(enabled);
+    }
+
+    //Handle how the game was exited
+    @Override
+    public void update(Observable o, Object arg) {
+        String exitType = (String) arg;
+
+        switch (exitType) {
+            case "player killed":
+                model.addScore();
+                model.deletePlayerIfExists();
+                updateCardLayout(view.getMenuPanel());
+                setBestScore();
+                break;
+            case "saved and exited":
+                model.savePlayer();
+                updateCardLayout(view.getMenuPanel());
+            case "exited":
+                updateCardLayout(view.getMenuPanel());
+        }
     }
 }

@@ -33,6 +33,11 @@ public abstract class Monster {
         this.health += amount;
     }
     
+    //Returns true if the monster is dead (health <= 0)
+    public boolean isDead() {
+        return health <= 0;
+    }
+    
     //Abstract methods
     public abstract void attack(Player player);
     public abstract void doNothing();

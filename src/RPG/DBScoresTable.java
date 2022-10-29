@@ -35,7 +35,8 @@ public class DBScoresTable extends DBTable {
         HashMap<String, Score> scores = new HashMap();
         
         try {
-            rs = dbManager.queryDB("SELECT * FROM " + this.tableName);
+            rs = dbManager.queryDB("SELECT * FROM " + this.tableName
+                                    + " ORDER BY score");
             
             while (rs.next()) {
                 scores.put(rs.getString("name"), new Score(rs.getString("name"), rs.getInt("score")));
