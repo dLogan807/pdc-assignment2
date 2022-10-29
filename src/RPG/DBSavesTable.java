@@ -7,6 +7,7 @@ import java.util.HashSet;
 
 public final class DBSavesTable extends DBTable {
     
+    //DBSavesTable constructor
     public DBSavesTable() {
         super();
         this.tableName = "SAVES";
@@ -16,6 +17,8 @@ public final class DBSavesTable extends DBTable {
     //Create the SAVES table if it doesn't already exist
     @Override
     protected void setupTable() {
+//        dbManager.updateDB("DROP TABLE SAVES");
+//        dbManager.updateDB("DROP TABLE SCORES");
         if (!tableExists(this.tableName))
             createTable();
     }
@@ -24,7 +27,7 @@ public final class DBSavesTable extends DBTable {
     @Override
     protected void createTable()  {
         dbManager.updateDB("CREATE TABLE " + this.tableName + "("
-                        + "save_id INT PRIMARY KEY,"
+                        + "save_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
                         + "name VARCHAR(200), "
                         + "health INT,"
                         + "move_count INT,"
@@ -41,9 +44,8 @@ public final class DBSavesTable extends DBTable {
         try {
             rs = dbManager.queryDB("SELECT save_id FROM " + this.tableName);
             
-            while (rs.next()) {
-                saves.put(rs.getInt(1), loadSave(rs.getInt(1)));
-            }
+            while (rs.next())
+                saves.put(rs.getInt(1), loadSave(rs.getInt("save_id")));
         }
         catch (SQLException ex) {
             System.out.println(ex.getMessage());
@@ -66,6 +68,8 @@ public final class DBSavesTable extends DBTable {
         Player player = null;
         
         try {
+            rs.next();
+            
             int saveID = rs.getInt("save_id");
             String name = rs.getString("name");
             int health = rs.getInt("health");
@@ -152,18 +156,33 @@ public final class DBSavesTable extends DBTable {
                         + " SET health = " + player.getHealth() 
                         + ", move_count = " + player.getMoveCount() 
                         + ", monsters_fought = " + player.getMonstersFought()
-                        + ", items = " + player.getItems().toString()
-                        + " WHERE saveID = " + player.getID());
+                        + ", items = '" + player.getItems().toString() + "'"
+                        + " WHERE save_id = " + player.getID());
     }
     
     //Insert the player's save into a new entry in the table
     public void addSave(Player player) {
-        dbManager.updateDB("INSERT INTO " + this.tableName
+        dbManager.updateDB("INSERT INTO " + this.tableName + " (name, health, move_count, monsters_fought, items)"
                         + " VALUES ("
-                        + player.getName() + ","
-                        + player.getHealth() + ","
-                        + player.getMoveCount() + ","
-                        + player.getMonstersFought() + ","
-                        + player.getItems().toString() + ")");
+                        + "'" + player.getName() + "'" + ", "
+                        + player.getHealth() + ", "
+                        + player.getMoveCount() + ", "
+                        + player.getMonstersFought() + ", "
+                        + "'" + player.getItems().toString() + "'" + ")");
+    }
+    
+    //Returns true if a save with this id exists in the table
+    public boolean saveExists(int id) {
+        ResultSet rs = dbManager.queryDB("SELECT * FROM " + tableName
+                        + " WHERE save_id = " + id);
+        
+        try {
+            if (rs.next())
+                return true;
+        } catch (SQLException ex) {
+            System.out.println(ex.getMessage());
+        }
+        
+        return false;
     }
 }

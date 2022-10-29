@@ -15,18 +15,23 @@ public class Spider extends Monster {
         //50% to use either attack
         boolean ramAttack = this.rand.nextBoolean();
             if (ramAttack) {
-                System.out.println("The Spider bites you!");
+                this.monsterText = "The Spider bites you!";
             }
             else
-                System.out.println("The Spider charges at you!");
+                this.monsterText = "The Spider charges at you!";
         
+        this.monsterText += "\n\nYou take " + damage + " damage!";
+            
         player.updateHealth(0 - damage);
+        
+        if (player.isDead())
+            monsterText += "\n\nThe Spider killed you...";
+        
     }
 
     //When the spider doesn't attack a player
     @Override
     public void doNothing() {
-        System.out.println("The Spider bares its fangs and");
-        System.out.println("hisses menacingly!");
+        this.monsterText = "The Spider bares its fangs and hisses menacingly!";
     }
 }

@@ -6,6 +6,7 @@ public abstract class Monster {
     Random rand;
     protected String name;
     protected int health;
+    protected String monsterText;
     
     //Monster constructor
     public Monster() {
@@ -22,9 +23,19 @@ public abstract class Monster {
         return health;
     }
     
+    //Return the monster's text
+    public String getMonsterText() {
+        return this.monsterText;
+    }
+    
     //Update the monster's health from the amount
     public void updateHealth(int amount) {
         this.health += amount;
+    }
+    
+    //Returns true if the monster is dead (health <= 0)
+    public boolean isDead() {
+        return health <= 0;
     }
     
     //Abstract methods
