@@ -169,7 +169,7 @@ public class BattleController extends Observable implements ActionListener  {
         }
     }
     
-    //Generates a radio button with it's text set to the passed item's info
+    //Generates and returns a radio button with it's text set to the passed item's info
     private JRadioButton generateItemRadioButton(Item item, int y) {
         String radioText = item.getName() + " [" + item.getNumHeld() + " avail.]";
         

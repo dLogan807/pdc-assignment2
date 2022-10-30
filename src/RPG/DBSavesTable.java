@@ -11,28 +11,24 @@ public final class DBSavesTable extends DBTable {
     public DBSavesTable() {
         super();
         this.tableName = "SAVES";
-        this.setupTable();
-    }
-    
-    //Create the SAVES table if it doesn't already exist
-    @Override
-    protected void setupTable() {
-//        dbManager.updateDB("DROP TABLE SAVES");
-//        dbManager.updateDB("DROP TABLE SCORES");
+        
+        //Create the table if it doesn't exist
         if (!tableExists(tableName))
             createTable();
     }
     
     //Create the saves table
     @Override
-    protected void createTable()  {
-        dbManager.updateDB("CREATE TABLE " + tableName + "("
-                        + "save_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                        + "name VARCHAR(200), "
-                        + "health INT,"
-                        + "move_count INT,"
-                        + "monsters_fought INT,"
-                        + "items VARCHAR(41))");
+    protected boolean createTable()  {
+        boolean created = dbManager.updateDB("CREATE TABLE " + tableName + "("
+                            + "save_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                            + "name VARCHAR(200), "
+                            + "health INT,"
+                            + "move_count INT,"
+                            + "monsters_fought INT,"
+                            + "items VARCHAR(41))");
+        
+        return created;
     }
     
     //Return all saves in the table as a HashMap, mapped to their id

@@ -37,7 +37,7 @@ public class HealingPotion extends Potion {
         int damage = rand.nextInt(5);
         
         itemText = "The potion shatters over the monster!\n"
-                        + "It seems mildy effective.\n\n";
+                        + "It doesn't seem very effective.\n\n";
         
         itemText += "It takes " + damage + " damage!";
         

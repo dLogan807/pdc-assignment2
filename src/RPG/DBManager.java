@@ -46,7 +46,9 @@ public final class DBManager {
                 conn = DriverManager.getConnection(URL);
                 System.out.println(URL + "\n- Connection successfully established -");
             } catch (SQLException ex) {
-                System.out.println("Cannot access the embedded database from multiple programs simultaneously!");
+                System.out.println("Cannot access the embedded database.\n"
+                                + "Ensure that the lib/derby.jar is present in the root directory\n"
+                                + "and that no other instances of the program are running.");
             }
         }
         
@@ -89,10 +91,11 @@ public final class DBManager {
         return resultSet;
     }
 
-    //Execute the SQL string on the database
-    public void updateDB(String sql) {
+    //Execute the SQL string on the database. Returns false is execution failed
+    public boolean updateDB(String sql) {
         Connection connection = conn;
         Statement statement = null;
+        Boolean successful = true;
 
         try {
             statement = connection.createStatement();
@@ -100,6 +103,9 @@ public final class DBManager {
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            successful = false;
         }
+        
+        return successful;
     }
 }

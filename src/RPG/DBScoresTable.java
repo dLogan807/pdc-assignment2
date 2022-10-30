@@ -9,23 +9,22 @@ public final class DBScoresTable extends DBTable {
     public DBScoresTable() {
         super();
         this.tableName = "SCORES";
-        this.setupTable();
-    }
-    
-    //Create the SCORES table if it doesn't already exist
-    @Override
-    protected void setupTable() {
+        
+        //Create the table if it doesn't exist
         if (!tableExists(tableName))
             createTable();
     }
     
     //Create the scores table
     @Override
-    protected void createTable() {
-        dbManager.updateDB("CREATE TABLE " + tableName + "("
-                        + "score_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                        + "name VARCHAR(200), "
-                        + "score INT)");
+    protected boolean createTable() {
+        boolean created;
+        created = dbManager.updateDB("CREATE TABLE " + tableName + "("
+                                + "score_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                                + "name VARCHAR(200), "
+                                + "score INT)");
+        
+        return created;
     }
 
     //Return the data of the SCORES table as a HashMap of scores

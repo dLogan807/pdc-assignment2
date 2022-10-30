@@ -51,11 +51,8 @@ public abstract class DBTable {
     
     //Abstract methods:
     
-    //Create the table if not created yet
-    protected abstract void setupTable();
-    
     //Create the table
-    protected abstract void createTable();
+    protected abstract boolean createTable();
     
     //Return the contents of the table as a HashMap 
     protected abstract HashMap getTableData();

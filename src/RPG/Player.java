@@ -76,6 +76,11 @@ public final class Player {
         return playerText;
     }
     
+    //Calculate the player's score
+    public int calcScore() {
+        return moveCount + monstersFought * 10;
+    }
+    
     //Returns a cropped version of the player's name if it's too long
     public String getCroppedName() {
         String croppedName, fullName = getName();
@@ -130,7 +135,7 @@ public final class Player {
             items.add(item);
     }
     
-    //Returns true if the player loaded a game
+    //Returns true if the player loaded a game (id is -1 when playing a new game)
     public boolean isLoaded() {
         return !(id == -1);
     }
@@ -140,17 +145,23 @@ public final class Player {
         return health == 0;
     }
     
-    //Remove an item from the player
-    public void removeItemFromPlayer(Item item) {
+    //Remove an item from the player. Returns true if successful
+    public boolean removeItemFromPlayer(Item item) {
+        boolean removed = false;
+        
         for (Item i : items) {
             if (i.equals(item)) {
                 if (i.numHeld > 1)
                     i.numHeld--;
                 else
                     items.remove(i);
+                
+                removed = true;
                 break;
             }
         }
+        
+        return removed;
     }
     
     //Returns the item matching the given name
@@ -175,7 +186,7 @@ public final class Player {
         removeItemFromPlayer(item);
     }
     
-    //Use an item against a monster
+    //Throw an item at monster
     public void throwItem(Item item, Monster monster) {
         if (item instanceof Potion)
             ((Potion) item).throwItem(monster);

@@ -59,13 +59,9 @@ public class Menu extends Observable {
   
     //Add the player's score to the score database
     public void addScore() {
-        scoresTable.addScore(new Score(player.getName(), calcScore()));
+        scoresTable.addScore(new Score(player.getName(), player.calcScore()));
     }
-    
-    //Calculate the player's score
-    private int calcScore() {
-        return player.getMoveCount() + player.getMonstersFought() * 10;
-    }
+
     
     //Return a String of player scores
     public String getScores() {
