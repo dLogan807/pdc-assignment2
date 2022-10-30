@@ -21,12 +21,12 @@ public abstract class Item {
     
     //Gets the number of the item held by the player
     public int getNumHeld() {
-        return this.numHeld;
+        return numHeld;
     }
     
     //Gets how the item's text
     public String getItemText() {
-        return this.itemText;
+        return itemText;
     }
     
     //Abstract methods for the default operations of using and throwing the item
@@ -42,7 +42,7 @@ public abstract class Item {
             return false;
         Item other = (Item) o;
         
-        return (this.getName().equals(other.getName()));
+        return (getName().equals(other.getName()));
     }
     
     //Create hashCode from the item's name
@@ -50,8 +50,8 @@ public abstract class Item {
     public int hashCode() {
         int hashCode = 1;
                 
-        for (int i = 0; i < this.getName().length(); i++)
-            hashCode += this.getName().charAt(i);
+        for (int i = 0; i < getName().length(); i++)
+            hashCode += getName().charAt(i);
         hashCode = 183 * hashCode;
         
         return hashCode;
@@ -60,6 +60,6 @@ public abstract class Item {
     //Print the item and the number held
     @Override 
     public String toString() {
-        return this.getName() + " " + this.numHeld;
+        return getName() + " " + numHeld;
     }
 }

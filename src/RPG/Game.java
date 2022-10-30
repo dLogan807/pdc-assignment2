@@ -15,7 +15,7 @@ public final class Game extends Observable {
     
     //Return the player
     public Player getPlayer() {
-        return this.player;
+        return player;
     }
     
     //Returns the battle model

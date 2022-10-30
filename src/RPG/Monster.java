@@ -25,15 +25,15 @@ public abstract class Monster {
     
     //Return the monster's text
     public String getMonsterText() {
-        return this.monsterText;
+        return monsterText;
     }
     
     //Update the monster's health from the amount
     public void updateHealth(int amount) {
-        this.health += amount;
+        health += amount;
     }
     
-    //Returns true if the monster is dead (health <= 0)
+    //Returns true if the monster is dead
     public boolean isDead() {
         return health <= 0;
     }

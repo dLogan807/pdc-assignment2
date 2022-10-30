@@ -14,7 +14,7 @@ public class Main {
     private final JPanel mainPanel;
     private Menu menu;
     private MenuView menuView;
-    private Player player;
+    private MenuController menuController;
     
     //Main constructor
     public Main() {
@@ -52,7 +52,7 @@ public class Main {
     private void initiateMenu() {        
         menu = new Menu();
         menuView = new MenuView();
-        MenuController menuController = new MenuController(menu, menuView);
+        menuController = new MenuController(menu, menuView);
         
         menuView.addController(menuController);
     }

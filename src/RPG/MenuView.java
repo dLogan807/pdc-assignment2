@@ -324,94 +324,107 @@ public class MenuView extends javax.swing.JPanel {
     private javax.swing.JPanel viewScoresPanel;
     // End of variables declaration//GEN-END:variables
 
+    //Return the menu panel
     public javax.swing.JPanel getMenuPanel() {
         return menuPanel;
     }
 
+    //Return the begin game button
     public javax.swing.JButton getBeginGameButton() {
         return beginGameButton;
     }
 
+    //Return the best score label
     public javax.swing.JLabel getBestScoreLabel() {
         return bestScoreLabel;
     }
     
+    //Return the game panel
     public javax.swing.JPanel getGamePanel() {
         return gamePanel;
     }
 
+    //Return the load game's load button
     public javax.swing.JButton getLoadButton() {
         return loadButton;
     }
 
+    //Return the load game panel's back button
     public javax.swing.JButton getLoadGameBackButton() {
         return loadGameBackButton;
     }
 
+    //Return the load game button
     public javax.swing.JButton getLoadGameButton() {
         return loadGameButton;
     }
 
+    //Return the load game panel
     public javax.swing.JPanel getLoadGamePanel() {
         return loadGamePanel;
     }
 
+    //Return the name text field
     public javax.swing.JTextField getNameTextField() {
         return nameTextField;
     }
 
+    //Return the new game panel's back button
     public javax.swing.JButton getNewGameBackButton() {
         return newGameBackButton;
     }
 
+    //Return the new game button
     public javax.swing.JButton getNewGameButton() {
         return newGameButton;
     }
 
+    //Return the new game panel
     public javax.swing.JPanel getNewGamePanel() {
         return newGamePanel;
     }
 
-    public javax.swing.JLabel getNewGameTitleLabel() {
-        return newGameTitleLabel;
-    }
-
+    //Return the quit button
     public javax.swing.JButton getQuitButton() {
         return quitButton;
     }
 
+    //Return the saves scroll pane
     public javax.swing.JScrollPane getSavesScrollPane() {
         return savesScrollPane;
     }
     
+    //Return the saves panel
     public javax.swing.JPanel getSavesPanel() {
         return savesPanel;
     }
 
-    public javax.swing.JLabel getSavesTitleLabel() {
-        return savesTitleLabel;
-    }
-
+    //Return the saves button group
     public javax.swing.ButtonGroup getSavesButtonGroup() {
         return savesButtonGroup;
     }
 
+    //Return the score panel's back button
     public javax.swing.JButton getScoresBackButton() {
         return scoresBackButton;
     }
     
+    //Return scores text area
     public javax.swing.JTextArea getScoresTextArea() {
         return scoresTextArea;
     }
 
+    //Return the view scores button
     public javax.swing.JButton getViewScoresButton() {
         return viewScoresButton;
     }
 
+    //Return the view scores panel
     public javax.swing.JPanel getViewScoresPanel() {
         return viewScoresPanel;
     }
     
+    //Return the game panel
     public void setGamePanel(JPanel gamePanel) {
         this.gamePanel = gamePanel;
     }

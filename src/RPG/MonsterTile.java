@@ -11,26 +11,26 @@ public class MonsterTile extends Tile {
     
     //Return the monster
     public Monster getMonster() {
-        return this.monster;
+        return monster;
     }
     
     //Return a random monster
     private Monster generateMonster() {
-        int monsterSelect = this.getRand().nextInt(3);
-        Monster monster;
+        int monsterSelect = getRand().nextInt(3);
+        Monster generateMonster;
         
         switch(monsterSelect) {
             case 1:
-                monster = MonsterFactory.getMonster("bat");
+                generateMonster = MonsterFactory.getMonster("bat");
                 break;
             case 2:
-                monster = MonsterFactory.getMonster("slime");
+                generateMonster = MonsterFactory.getMonster("slime");
                 break;
             default:
-                monster = MonsterFactory.getMonster("spider");
+                generateMonster = MonsterFactory.getMonster("spider");
                 break;
         }
         
-        return monster;
+        return generateMonster;
     }
 }

@@ -6,6 +6,7 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
+//Note that this class follows the Singleton design pattern
 public final class DBManager {
     private static DBManager instance;
     private final String URL = "jdbc:derby:RPGDB;create=true";
@@ -33,18 +34,21 @@ public final class DBManager {
         throw new CloneNotSupportedException();
     }
 
+    //Return the database connection
     public Connection getConnection() {
-        return this.conn;
+        return conn;
     }
 
     //Establish a connection to the database
     public void establishConnection() {
-        if (this.conn == null) {
+        if (conn == null) {
             try {
                 conn = DriverManager.getConnection(URL);
-                System.out.println(URL + "—Connection successfully established.");
             } catch (SQLException ex) {
-                System.out.println("Cannot access the embedded database from multiple programs simultaneously!");
+                System.out.println(ex.getMessage());
+                System.out.println("Cannot access the embedded database.\n"
+                                + "Ensure that the lib/derby.jar is present in the root directory\n"
+                                + "and that no other instances of the program are running.");
             }
         }
         
@@ -53,14 +57,14 @@ public final class DBManager {
     
     //Quit the program if a connection can't be established
     public void verifyConnection() {
-        if (this.conn == null) {
+        if (conn == null) {
             System.out.println("Connected failed, exiting...");
             System.exit(-1);
         }
     }
 
     //Close the connection to the database
-    public void closeConnections() {
+    public void closeConnection() {
         if (conn != null) {
             try {
                 conn.close();
@@ -70,9 +74,9 @@ public final class DBManager {
         }
     }
 
+    //Query the database on the query and return a ResultSet of the results
     public ResultSet queryDB(String sql) {
-
-        Connection connection = this.conn;
+        Connection connection = conn;
         Statement statement = null;
         ResultSet resultSet = null;
 
@@ -87,10 +91,11 @@ public final class DBManager {
         return resultSet;
     }
 
-    public void updateDB(String sql) {
-
-        Connection connection = this.conn;
+    //Execute the SQL string on the database. Returns false is execution failed
+    public boolean updateDB(String sql) {
+        Connection connection = conn;
         Statement statement = null;
+        Boolean successful = true;
 
         try {
             statement = connection.createStatement();
@@ -98,6 +103,9 @@ public final class DBManager {
 
         } catch (SQLException ex) {
             System.out.println(ex.getMessage());
+            successful = false;
         }
+        
+        return successful;
     }
 }

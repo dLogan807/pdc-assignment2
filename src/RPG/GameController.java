@@ -4,20 +4,17 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.util.Collections;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 import java.util.Random;
-import javax.swing.AbstractButton;
 import javax.swing.JPanel;
 import javax.swing.JRadioButton;
 import javax.swing.Timer;
 
 public class GameController extends Observable implements ActionListener, Observer  {
-    private Game model;
-    private GameView view;
-    private Random rand;
+    private final Game model;
+    private final GameView view;
+    private final Random rand;
     
     //Constructor
     public GameController(Game model, GameView view) {

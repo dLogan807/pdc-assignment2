@@ -30,11 +30,11 @@ public class Tile {
     
     //Gets the event text
     public String getEventText() {
-        return this.eventText;
+        return eventText;
     }
     
     //Do the tile's event
     public void doEvent(Player player) {
-        this.eventText = "You continue down the corridor.";
+        eventText = "You continue down the corridor.";
     }
 }

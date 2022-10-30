@@ -1,0 +1,13 @@
+My GitHub page for this assignment can be found here: 
+https://github.com/dLogan807/pdc-assignment2
+
+Branches that have been merged can be seen here: 
+https://github.com/dLogan807/pdc-assignment2/pulls?q=is%3Apr+is%3Aclosed
+
+Notes:
+ - Running DBSavesTableTest or DBScoresTableTest will drop the
+respective table.
+
+- Due to connection limitations of Derby embedded mode, the game can 
+only be open in one instance at a time. Hence, the game will refuse to
+start if it is already running.

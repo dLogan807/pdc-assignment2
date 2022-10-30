@@ -5,6 +5,7 @@ public class ItemFactory {
     public static Item getItem(String className) {
         Item i = null;
         
+        //If the class string contains "potion", call the potion factory
         if (className.toLowerCase().contains("potion"))
             i = PotionFactory.getPotion(className);
         

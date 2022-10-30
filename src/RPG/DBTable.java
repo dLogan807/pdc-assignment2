@@ -14,7 +14,7 @@ public abstract class DBTable {
 
     //Database Tables constructor
     public DBTable() {
-        dbManager = DBManager.getDBManagerInstance();
+        this.dbManager = DBManager.getDBManagerInstance();
     }
     
     //Check if a table exists in the database
@@ -46,16 +46,13 @@ public abstract class DBTable {
     
     //Close the connection to the database
     public void closeConnection() {
-        dbManager.closeConnections();
+        dbManager.closeConnection();
     }
     
     //Abstract methods:
     
-    //Create the table if not created yet
-    protected abstract void setupTable();
-    
     //Create the table
-    protected abstract void createTable();
+    protected abstract boolean createTable();
     
     //Return the contents of the table as a HashMap 
     protected abstract HashMap getTableData();

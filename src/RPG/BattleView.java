@@ -251,83 +251,97 @@ public class BattleView extends javax.swing.JPanel {
     private javax.swing.JButton useItemButton;
     // End of variables declaration//GEN-END:variables
 
+    //Return the battle panel
     public javax.swing.JPanel getBattlePanel() {
         return battlePanel;
     }
 
+    //Return the attack button
     public javax.swing.JButton getAttackButton() {
         return attackButton;
     }
 
+    //Return the player's battle health label
     public javax.swing.JLabel getBattleHealthLabel() {
         return battleHealthLabel;
     }
 
+    //Return the player's battle name label
     public javax.swing.JLabel getBattlePlayerNameLabel() {
         return battlePlayerNameLabel;
     }
 
+    //Return the battle's text area
     public javax.swing.JTextArea getBattleTextArea() {
         return battleTextArea;
     }
 
+    //Return the main battle use item button
     public javax.swing.JButton getUseItemButton() {
         return useItemButton;
     }
 
+    //Return the excape button
     public javax.swing.JButton getEscapeButton() {
         return escapeButton;
     }
 
+    //Return the exit button
     public javax.swing.JButton getExitButton() {
         return exitButton;
     }
 
+    //Return the item menu's back button
     public javax.swing.JButton getItemBackButton() {
         return itemBackButton;
     }
 
+    //Return the item menu's exit button
     public javax.swing.JButton getItemExitButton() {
         return itemExitButton;
     }
 
+    //Return the player's item menu health label
     public javax.swing.JLabel getItemHealthLabel() {
         return itemHealthLabel;
     }
 
+    //Return the item menu scroll pane for selecting items
     public javax.swing.JScrollPane getItemItemsScrollPane() {
         return itemItemsScrollPane;
     }
 
+    //Return the main item panel
     public javax.swing.JPanel getItemPanel() {
         return itemPanel;
     }
 
+    //Return the item menu player name label
     public javax.swing.JLabel getItemPlayerNameLabel() {
         return itemPlayerNameLabel;
     }
 
+    //Return the item menu panel for selecting items
     public javax.swing.JPanel getItemSelectItemPanel() {
         return itemSelectItemPanel;
     }
 
+    //Return the item menu throw item button
     public javax.swing.JButton getItemThrowItemButton() {
         return itemThrowItemButton;
     }
 
-    public javax.swing.JLabel getItemTitleLabel() {
-        return itemTitleLabel;
-    }
-
+    //Return the item menu item use button
     public javax.swing.JButton getItemUseItemButton() {
         return itemUseItemButton;
     }
 
+    //Return the items button group
     public javax.swing.ButtonGroup getItemsButtonGroup() {
         return itemsButtonGroup;
     }
     
-    //Events the GameController must listen for
+    //Events the BattleController must listen for
     public void addController(BattleController controller) {
         attackButton.addActionListener(controller);
         useItemButton.addActionListener(controller);

@@ -9,7 +9,6 @@ public final class Player {
     private final String name;
     private int health, moveCount, monstersFought;
     private HashSet<Item> items; 
-    private boolean quitFlag;
     private String playerText;
     
     //Constructor for creating a new player
@@ -20,7 +19,6 @@ public final class Player {
         this.moveCount = 0;
         this.monstersFought = 0;
         this.items = new HashSet();
-        this.quitFlag = false;
     }
     
     //Constructor for loading an existing player
@@ -31,7 +29,6 @@ public final class Player {
         this.moveCount = moveCount;
         this.monstersFought = monstersFought;
         this.items = items;
-        this.quitFlag = false;
     }
     
     //Get the player's ID
@@ -74,19 +71,14 @@ public final class Player {
         return items;
     }
     
-    //Get player's quit flag
-    public boolean getQuitFlag() {
-        return quitFlag;
-    }
-    
-    //Set the player's quit flag
-    public void setQuitFlag(boolean quitFlag) {
-        this.quitFlag = quitFlag;
-    }
-    
     //Returns the player's text
     public String getPlayerText() {
         return playerText;
+    }
+    
+    //Calculate the player's score
+    public int calcScore() {
+        return moveCount + monstersFought * 10;
     }
     
     //Returns a cropped version of the player's name if it's too long
@@ -143,7 +135,7 @@ public final class Player {
             items.add(item);
     }
     
-    //Returns true if the player loaded a game
+    //Returns true if the player loaded a game (id is -1 when playing a new game)
     public boolean isLoaded() {
         return !(id == -1);
     }
@@ -153,17 +145,23 @@ public final class Player {
         return health == 0;
     }
     
-    //Remove an item from the player
-    public void removeItemFromPlayer(Item item) {
+    //Remove an item from the player. Returns true if successful
+    public boolean removeItemFromPlayer(Item item) {
+        boolean removed = false;
+        
         for (Item i : items) {
             if (i.equals(item)) {
                 if (i.numHeld > 1)
                     i.numHeld--;
                 else
                     items.remove(i);
+                
+                removed = true;
                 break;
             }
         }
+        
+        return removed;
     }
     
     //Returns the item matching the given name
@@ -188,12 +186,15 @@ public final class Player {
         removeItemFromPlayer(item);
     }
     
-    //Use an item against a monster
+    //Throw an item at monster
     public void throwItem(Item item, Monster monster) {
         if (item instanceof Potion)
             ((Potion) item).throwItem(monster);
         
         removeItemFromPlayer(item);
+        
+        if (monster.isDead())
+            playerText += "You defeated the " + monster.getName() + "!";
     }
     
     //Attack a monster, dealing damage to it and returning the damage amount

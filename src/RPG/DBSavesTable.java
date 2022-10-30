@@ -11,28 +11,24 @@ public final class DBSavesTable extends DBTable {
     public DBSavesTable() {
         super();
         this.tableName = "SAVES";
-        this.setupTable();
-    }
-    
-    //Create the SAVES table if it doesn't already exist
-    @Override
-    protected void setupTable() {
-//        dbManager.updateDB("DROP TABLE SAVES");
-//        dbManager.updateDB("DROP TABLE SCORES");
-        if (!tableExists(this.tableName))
+        
+        //Create the table if it doesn't exist
+        if (!tableExists(tableName))
             createTable();
     }
     
     //Create the saves table
     @Override
-    protected void createTable()  {
-        dbManager.updateDB("CREATE TABLE " + this.tableName + "("
-                        + "save_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
-                        + "name VARCHAR(200), "
-                        + "health INT,"
-                        + "move_count INT,"
-                        + "monsters_fought INT,"
-                        + "items VARCHAR(41))");
+    protected boolean createTable()  {
+        boolean created = dbManager.updateDB("CREATE TABLE " + tableName + "("
+                            + "save_id INT PRIMARY KEY GENERATED ALWAYS AS IDENTITY (START WITH 1, INCREMENT BY 1),"
+                            + "name VARCHAR(200), "
+                            + "health INT,"
+                            + "move_count INT,"
+                            + "monsters_fought INT,"
+                            + "items VARCHAR(41))");
+        
+        return created;
     }
     
     //Return all saves in the table as a HashMap, mapped to their id
@@ -42,7 +38,7 @@ public final class DBSavesTable extends DBTable {
         HashMap<Integer, Player> saves = new HashMap();
 
         try {
-            rs = dbManager.queryDB("SELECT save_id FROM " + this.tableName);
+            rs = dbManager.queryDB("SELECT save_id FROM " + tableName);
             
             while (rs.next())
                 saves.put(rs.getInt(1), loadSave(rs.getInt("save_id")));
@@ -57,7 +53,7 @@ public final class DBSavesTable extends DBTable {
     //Load a save from the database into a Player object, returning its
     public Player loadSave(int saveID) {
         ResultSet rs = dbManager.queryDB("SELECT save_id, name, health, monsters_fought, move_count, items"
-                                        + " FROM " + this.tableName
+                                        + " FROM " + tableName
                                         + " WHERE save_id = " + saveID);
         
         return resultSetToPlayer(rs);
@@ -138,21 +134,21 @@ public final class DBSavesTable extends DBTable {
     }
     
     public void deleteSave(int saveID) {
-        dbManager.updateDB("DELETE FROM " + this.tableName
+        dbManager.updateDB("DELETE FROM " + tableName
                         + " WHERE save_id = " + saveID);
     }
     
     //Save the player's data by updating it if a save exists or creating a new save
     public void save(Player player) {
         if (player.getID() == -1) {
-            this.addSave(player);
+            addSave(player);
         } else
-            this.updateSave(player);
+            updateSave(player);
     }
     
     //Update the player's existing save in the database
     public void updateSave(Player player) {
-        dbManager.updateDB("UPDATE " + this.tableName
+        dbManager.updateDB("UPDATE " + tableName
                         + " SET health = " + player.getHealth() 
                         + ", move_count = " + player.getMoveCount() 
                         + ", monsters_fought = " + player.getMonstersFought()
@@ -162,7 +158,7 @@ public final class DBSavesTable extends DBTable {
     
     //Insert the player's save into a new entry in the table
     public void addSave(Player player) {
-        dbManager.updateDB("INSERT INTO " + this.tableName + " (name, health, move_count, monsters_fought, items)"
+        dbManager.updateDB("INSERT INTO " + tableName + " (name, health, move_count, monsters_fought, items)"
                         + " VALUES ("
                         + "'" + player.getName() + "'" + ", "
                         + player.getHealth() + ", "
@@ -171,7 +167,7 @@ public final class DBSavesTable extends DBTable {
                         + "'" + player.getItems().toString() + "'" + ")");
     }
     
-    //Returns true if a save with this id exists in the table
+    //Returns true if a save with the id exists in the table
     public boolean saveExists(int id) {
         ResultSet rs = dbManager.queryDB("SELECT * FROM " + tableName
                         + " WHERE save_id = " + id);

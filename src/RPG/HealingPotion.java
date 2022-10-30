@@ -17,10 +17,10 @@ public class HealingPotion extends Potion {
     //Heal the player on using the potion
     @Override
     public void useItem(Player player) {
-        int health = this.rand.nextInt(5) + 5;
+        int health = rand.nextInt(5) + 5;
         
-        this.itemText = "It tastes sweet!\n\n";
-        this.itemText += "You gain " + health + " health!";
+        itemText = "It tastes sweet!\n\n";
+        itemText += "You gain " + health + " health!";
         
         player.updateHealth(health);
     }
@@ -28,18 +28,18 @@ public class HealingPotion extends Potion {
     //Display description of throwing the item
     @Override
     public void throwItem() {
-        this.itemText = "The potion shatters, but nothing happens.";
+        itemText = "The potion shatters, but nothing happens.";
     }
 
     //When the player throws the item at the monster
     @Override
     public void throwItem(Monster monster) {
-        int damage = this.rand.nextInt(5);
+        int damage = rand.nextInt(5);
         
-        this.itemText = "The potion shatters over the monster!\n"
-                        + "It seems mildy effective.\n\n";
+        itemText = "The potion shatters over the monster!\n"
+                        + "It doesn't seem very effective.\n\n";
         
-        this.itemText += "It takes " + damage + " damage!";
+        itemText += "It takes " + damage + " damage!";
         
         monster.updateHealth(0 - damage);
     }

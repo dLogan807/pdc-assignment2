@@ -10,17 +10,17 @@ public class Spider extends Monster {
     //When spider attacks a player
     @Override
     public void attack(Player player) {
-        int damage = this.rand.nextInt(9) + 1;
+        int damage = rand.nextInt(9) + 1;
         
         //50% to use either attack
-        boolean ramAttack = this.rand.nextBoolean();
+        boolean ramAttack = rand.nextBoolean();
             if (ramAttack) {
-                this.monsterText = "The Spider bites you!";
+                monsterText = "The Spider bites you!";
             }
             else
-                this.monsterText = "The Spider charges at you!";
+                monsterText = "The Spider charges at you!";
         
-        this.monsterText += "\n\nYou take " + damage + " damage!";
+        monsterText += "\n\nYou take " + damage + " damage!";
             
         player.updateHealth(0 - damage);
         
@@ -32,6 +32,6 @@ public class Spider extends Monster {
     //When the spider doesn't attack a player
     @Override
     public void doNothing() {
-        this.monsterText = "The Spider bares its fangs and hisses menacingly!";
+        monsterText = "The Spider bares its fangs and hisses menacingly!";
     }
 }
