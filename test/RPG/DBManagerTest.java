@@ -67,32 +67,5 @@ public class DBManagerTest {
         assertTrue(dbManager.getConnection().isClosed());
     }
     
-    /**
-     * Test of updateDB method, of class DBManager.
-     */
-    @Test
-    public void testUpdateDB() {
-        String sql = "CREATE TABLE TEST(chars VARCHAR(10))";
-
-        dbManager.establishConnection();
-        boolean updateSuccess = dbManager.updateDB(sql);
-        
-        assertTrue(updateSuccess);
-    }
-    
-    /**
-     * Test of queryDB method, of class DBManager.
-     * @throws java.sql.SQLException
-     */
-    @Test
-    public void testQueryDB() throws SQLException {
-        String sql = "INSERT INTO TEST (chars) VALUES ('test')";
-
-        dbManager.establishConnection();
-        dbManager.updateDB(sql);
-        
-        ResultSet rs = dbManager.queryDB("SELECT chars FROM TEST");
-
-        assertTrue(rs.next());
-    }
+    //Remaining methods are tested through BDSavesTableTest and DBScoresTableTest tests
 }
