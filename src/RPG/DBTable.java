@@ -46,7 +46,7 @@ public abstract class DBTable {
     
     //Close the connection to the database
     public void closeConnection() {
-        dbManager.closeConnections();
+        dbManager.closeConnection();
     }
     
     //Abstract methods:

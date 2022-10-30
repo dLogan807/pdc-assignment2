@@ -44,8 +44,8 @@ public final class DBManager {
         if (conn == null) {
             try {
                 conn = DriverManager.getConnection(URL);
-                System.out.println(URL + "\n- Connection successfully established -");
             } catch (SQLException ex) {
+                System.out.println(ex.getMessage());
                 System.out.println("Cannot access the embedded database.\n"
                                 + "Ensure that the lib/derby.jar is present in the root directory\n"
                                 + "and that no other instances of the program are running.");
@@ -64,7 +64,7 @@ public final class DBManager {
     }
 
     //Close the connection to the database
-    public void closeConnections() {
+    public void closeConnection() {
         if (conn != null) {
             try {
                 conn.close();
